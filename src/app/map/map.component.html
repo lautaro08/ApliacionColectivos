@@ -1,0 +1,28 @@
+<md-toolbar> 
+  <span> Tu ubicacion </span>
+  <button md-button (click)="optionChange(1)"><md-icon>place</md-icon></button>
+
+  <md-toolbar-row>
+    <span> Tu destino </span>
+    <button md-button (click)="optionChange(2)"><md-icon>place</md-icon></button>
+  </md-toolbar-row>
+</md-toolbar>
+
+<ng2-map center="Concepcion del uruguay, Argentina" (mapClick)="mapClicked($event)">
+  
+  <marker 
+
+    [position]="ubicacion"
+    [draggable]="true"
+  >
+
+  </marker>
+
+  <marker 
+  *ngIf="destino != null"
+    [position] = "destino"
+    [draggable]="true"
+  >
+
+  </marker>
+</ng2-map>

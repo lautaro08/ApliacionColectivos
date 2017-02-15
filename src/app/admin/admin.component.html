@@ -1,0 +1,10 @@
+<ul class="colectivos">
+    <li *ngFor="let colectivo of colectivos"
+      [class.selected]="colectivo === selectedColectivo">
+      <span class="badge">{{colectivo.nombre}}</span>
+      <span class="badge">{{colectivo.descripcion}}</span>
+      <span class="badge">{{colectivo.$key}}</span>
+    </li>
+</ul>
+
+<a href="/nuevoColectivo"><md-icon>create</md-icon>Crear nuevo colectivo</a>

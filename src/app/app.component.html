@@ -1,0 +1,30 @@
+<md-sidenav-container class="example-container">
+
+    <md-sidenav #sidenav mode="side" class="app-sidenav">
+      Menu de mierda
+      <ul>
+        <li>
+          <a routerLink="/"><md-icon>directions_bus</md-icon>recorridos</a>
+        </li>
+        <li>
+          <a routerLink="/"><md-icon>donut_small</md-icon>estadisticas</a>
+        </li>
+        <li>
+          <a routerLink="/admin"><md-icon>vpn_key</md-icon>Administrador</a>
+        </li>
+      </ul>
+      
+    </md-sidenav>
+
+    <md-toolbar>
+      <button md-button (click)="sidenav.toggle()"><md-icon>menu</md-icon></button>
+      <span> Colectivos Uruguay </span>
+    </md-toolbar>  
+
+    <div class="app-content">
+      <router-outlet></router-outlet>
+    </div>
+</md-sidenav-container>
+
+
+

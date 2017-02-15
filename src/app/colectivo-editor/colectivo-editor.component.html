@@ -1,0 +1,38 @@
+<div class="container">
+    <h2>Crear colectivo</h2>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" class="form-control" required
+        [(ngModel)]="model.nombre" name="nombre">
+      </div>
+
+      <div class="form-group">
+        <label for="descripcion">Descripcion</label>
+        <input type="text" class="form-control" required
+        [(ngModel)]="model.descripcion" name="descripcion">
+      </div>
+
+      <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+
+    <ng2-map center= "Concepcion del uruguay, Argentina">
+
+    <map-polygon 
+      [editable]="true"
+      [paths]="paths"
+      [strokeColor]="'#FFC107'"
+      [strokeOpacity]="0.8"
+      [strokeWeight]="2"
+      [fillColor]="'#FFC107'"
+      [fillOpacity]="0.35"
+      (initialized$)="onPolyInit($event)"
+      >
+     </map-polygon>
+
+    </ng2-map>
+
+    <button (click)="guardarRuta()">Guardar</button>
+
+</div>
