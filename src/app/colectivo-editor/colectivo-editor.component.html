@@ -1,28 +1,34 @@
 <div class="container">
     <h2>Crear colectivo</h2>
 
-    <form (ngSubmit)="onSubmit()">
+    <form *ngIf="colectivoInput != null" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="nombre">Nombre</label>
         <input type="text" class="form-control" required
-        [(ngModel)]="model.nombre" name="nombre">
+         [(ngModel)]="colectivoInput.nombre" name="nombre">
       </div>
 
       <div class="form-group">
         <label for="descripcion">Descripcion</label>
         <input type="text" class="form-control" required
-        [(ngModel)]="model.descripcion" name="descripcion">
+        [(ngModel)]="colectivoInput.descripcion" name="descripcion">
+      </div>
+
+      <div class="form-group">
+        <label for="color">Color</label>
+        <input type="text" class="form-control" required
+        [(ngModel)]="colectivoInput.color" name="color">
       </div>
 
       <button type="submit" class="btn btn-success">Submit</button>
     </form>
 
-    <ng2-map center= "Concepcion del uruguay, Argentina">
+    <ng2-map *ngIf="colectivoInput != null" center= "Concepcion del uruguay, Argentina">
 
-    <map-polygon 
+    <map-polygon
       [editable]="true"
-      [paths]="paths"
-      [strokeColor]="'#FFC107'"
+      [paths]="ruta"
+      [strokeColor]="colectivoInput.color"
       [strokeOpacity]="0.8"
       [strokeWeight]="2"
       [fillColor]="'#FFC107'"

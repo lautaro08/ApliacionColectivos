@@ -1,8 +1,11 @@
 import { Ruta } from './../shared/models/ruta';
 import { AfService } from './../af.service';
 import { Colectivo } from './../shared/models/colectivo';
-import { Component, OnInit} from '@angular/core';
-import { SebmGoogleMap, SebmGoogleMapPolygon, LatLngLiteral } from 'angular2-google-maps/core';
+import { Component, OnInit, Input} from '@angular/core';
+import { Router, ActivatedRoute, Params }   from '@angular/router';
+import { Location }                 from '@angular/common';
+import {Observable} from "rxjs/Rx";
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-colectivo-editor',
@@ -12,8 +15,13 @@ import { SebmGoogleMap, SebmGoogleMapPolygon, LatLngLiteral } from 'angular2-goo
 })
 export class ColectivoEditorComponent implements OnInit {
 
+  colectivoInput : any;
   //el objeto poligono que tiene la ruta del colectivo
-  ruta :any;
+  ruta : any[] = [];
+
+  polygono : any;
+
+  id: any;
 
   paths : any = [
     {lat:-32.489723535115274,lng:-58.25878143310547},
@@ -22,35 +30,69 @@ export class ColectivoEditorComponent implements OnInit {
     {lat:-32.472636188236606,lng:-58.22779655456543}
   ];
 
-  //esto despues va a tener que ser un input para permitir editar colectivos ya creados
-  model = new Colectivo('', 'nuevo colectivo', 'descripcion', null);
-  nuevaRuta = new Ruta('', '', []);
   submitted = false;
 
-  constructor(public afService: AfService){}
+  constructor(
+    public afService: AfService,
+    private route: ActivatedRoute,
+    private location: Location
+  ){}
 
   ngOnInit() {
-  }
+    this.id = this.route.snapshot.params['id'];
+    console.log(this.id);
+    if(this.id == 'nuevo'){
+       this.colectivoInput = new Colectivo('','', '', '#0000e6', this.paths);
+       this.ruta = this.paths;
+       console.log('nuevo colectivo cargado en pantalla');
+    }else{
+      this.afService.getColectivo(this.id)
+      .do(console.log)
+      .subscribe(snapshot =>{         
+        if(snapshot.val() != null){      
+          console.log(snapshot.val());     
+
+
+
+          for( let key in snapshot.val().ruta){
+            console.log(snapshot.val().ruta[key]);
+            this.ruta.push(snapshot.val().ruta[key]);
+          }
+
+
+
+
+          this.colectivoInput = snapshot.val();         
+        }       
+      console.log(this.colectivoInput);
+    });
+  }}
 
   onSubmit() { 
     console.log('colectivo guardado');
     this.submitted = true; 
-    this.afService.createNewColectivo(this.model);
+    this.guardarRuta();
+    console.log('id', this.id);
+    if(this.id === 'nuevo'){
+      this.afService.createNewColectivo(this.colectivoInput);
+    }else{
+      this.afService.updateColectivo(this.colectivoInput);
+    }
   }
 
   onPolyInit(polygon){
     console.log('polygon', polygon);
-    this.ruta = polygon;
+    this.polygono = polygon;
   }
 
   guardarRuta(){
     var auxPath = [];
-    this.ruta.getPath().getArray().forEach(
+    this.polygono.getPath().getArray().forEach(
       function(element, index){
         auxPath.push(element.toJSON());
       }
     );   
-    this.model.ruta = auxPath.toString();
+    this.colectivoInput.ruta = auxPath;
     console.log(auxPath);
   }
 }

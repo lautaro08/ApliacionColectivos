@@ -1,0 +1,32 @@
+<ng2-map  *ngIf="colectivos != null"
+center= "Concepcion del uruguay, Argentina">
+
+    <map-polygon *ngFor="let colectivo of colectivos; let i=index"
+      id = "poligono_{{i}}"
+      [strokeColor]="colectivo.color"
+      [strokeOpacity]="0.8"
+      [strokeWeight]="10"
+      [fillOpacity]="0"
+      (initialized$)="onPolygonInit($event, colectivo, index)" 
+      (click) = "mouseOverPolygon(i)"
+      >
+
+      <info-window id="colectivo.nombre">
+        {{colectivo.nombre}}
+      </info-window>
+     </map-polygon>
+
+</ng2-map>
+
+<ul class="colectivos">
+    <li *ngFor="let colectivo of colectivos" 
+      [class.selected]="colectivo === selectedColectivo">
+      <a [routerLink]="['/editorColectivo', colectivo.$key]">
+        <font color="colectivo.color">{{colectivo.nombre}}</font>
+        <span class="badge">{{colectivo.descripcion}}</span>
+        <span class="badge">{{colectivo.$key}}</span>
+      </a>
+    </li>
+</ul>
+
+<button (click)="aVerQueHay()">Apretame bayby</button>

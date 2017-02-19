@@ -11,7 +11,7 @@
 <ng2-map center="Concepcion del uruguay, Argentina" (mapClick)="mapClicked($event)">
   
   <marker 
-
+  *ngIf="ubicacion != null"
     [position]="ubicacion"
     [draggable]="true"
   >

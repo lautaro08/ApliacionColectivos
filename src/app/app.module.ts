@@ -18,13 +18,15 @@ import { AngularFireModule } from 'angularfire2';
 import { firebaseConfig } from './config/firebase-config';
 import { ColectivoEditorComponent } from './colectivo-editor/colectivo-editor.component';
 import { Ng2MapModule} from 'ng2-map';
+import { RecorridosComponent } from './recorridos/recorridos.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
     AdminComponent,
-    ColectivoEditorComponent
+    ColectivoEditorComponent,
+    RecorridosComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,10 @@ import { Ng2MapModule} from 'ng2-map';
     HttpModule,
     RouterModule.forRoot(routeConfig),
     MaterialModule.forRoot(),
-    Ng2MapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBaiyUe1Uzh9eLOcKmHbKO-9Bj22k-pzhg'}),
+    Ng2MapModule.forRoot(
+      {
+        apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyDZPEwiIvxgr2rmEwuRdtP_k5OyyVYjHIU'
+      }),
     AngularFireModule.initializeApp(firebaseConfig)
   ],
   providers: [],

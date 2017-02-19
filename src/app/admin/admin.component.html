@@ -1,10 +1,12 @@
 <ul class="colectivos">
-    <li *ngFor="let colectivo of colectivos"
+    <li *ngFor="let colectivo of colectivos" 
       [class.selected]="colectivo === selectedColectivo">
-      <span class="badge">{{colectivo.nombre}}</span>
-      <span class="badge">{{colectivo.descripcion}}</span>
-      <span class="badge">{{colectivo.$key}}</span>
+      <a [routerLink]="['/editorColectivo', colectivo.$key]">
+        <span class="badge">{{colectivo.nombre}}</span>
+        <span class="badge">{{colectivo.descripcion}}</span>
+        <span class="badge">{{colectivo.$key}}</span>
+      </a>
     </li>
 </ul>
 
-<a href="/nuevoColectivo"><md-icon>create</md-icon>Crear nuevo colectivo</a>
+<a href="/editorColectivo"><md-icon>create</md-icon>Crear nuevo colectivo</a>
