@@ -12,7 +12,7 @@ export class RecorridosComponent implements OnInit {
 
   colectivos: Colectivo[];
 
-  poligonos: any[] = [];
+  poligonos: google.maps.Polygon[] = [];
 
   constructor(private afService: AfService) { 
     
@@ -39,8 +39,24 @@ export class RecorridosComponent implements OnInit {
   }
 
   mouseOverPolygon(index: number){
-    var res = this.poligonos.find(poligono => poligono.id === 'poligono_'+index);
+    var res = this.poligonos[index];
     console.log(index, res);
+  }
+
+  colectivoSelected(index: number, color: string){
+    this.poligonos.forEach((poligono, i) => {
+      if(i != index){
+        poligono.setOptions({
+          strokeColor: '#888888',
+          strokeOpacity: 0.3
+        });
+      }else{
+        poligono.setOptions({
+          strokeColor: color,
+          strokeOpacity: 0.8
+        });
+      }
+    });
   }
 
   aVerQueHay(){

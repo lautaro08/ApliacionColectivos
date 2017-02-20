@@ -21,7 +21,7 @@
       </div>
       <div class="form-group">
         <label for="color">Color de la ruta</label>
-        <input type="color" class="form-control" name="color">
+        <input type="color" class="form-control" name="color" [ngModel]="colectivoModel.color" (ngModelChange)="colorChange($event)">
       </div>
       <div class="form-group">
         <label for="ruta">Ruta</label>

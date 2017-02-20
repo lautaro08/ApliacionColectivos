@@ -25,6 +25,9 @@ export class ColectivoEditorComponent implements OnInit {
   //colectivo usado para interactuar con el formulario
   colectivoModel : Colectivo;
 
+  //variable para mantener el color que se va modificando
+  colorAuxiliar : string;
+
   submitted = false;
 
   //flag que indica si el colectivo es nuevo o se esta editando
@@ -75,6 +78,7 @@ export class ColectivoEditorComponent implements OnInit {
         colectivo.ruta.push(element.toJSON());
       }
     );   
+    colectivo.color = this.colorAuxiliar;
     if(this.creando){
       this.afService.createNewColectivo(this.colectivoModel);
     }else{
@@ -91,6 +95,8 @@ export class ColectivoEditorComponent implements OnInit {
 
   colorChange(newColor){
     //metodo para actualizar los valores ya que el selector de color no soporta NgModel
-    this.colectivoModel.color = newColor;
+    console.log('cambio el color: ', newColor);
+    this.polygon.setOptions({strokeColor: newColor});
+    this.colorAuxiliar = newColor;
   }
 }
