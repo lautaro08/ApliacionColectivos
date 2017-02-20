@@ -1,44 +1,45 @@
 <div class="container">
-    <h2>Crear colectivo</h2>
-
-    <form *ngIf="colectivoInput != null" (ngSubmit)="onSubmit()">
+    <h1>Crear nuevo colectivo</h1>
+    <form (ngSubmit)="onSubmit()" #colectivoForm="ngForm">
       <div class="form-group">
         <label for="nombre">Nombre</label>
-        <input type="text" class="form-control" required
-         [(ngModel)]="colectivoInput.nombre" name="nombre">
+        <input type="text" class="form-control" name="nombre" 
+          [(ngModel)]="colectivoModel.nombre" required #nombre="ngModel">
+        <div [hidden]="nombre.valid || nombre.pristine"
+             class="alert alert-danger">
+             El nombre es obligatorio
+        </div>
       </div>
-
       <div class="form-group">
         <label for="descripcion">Descripcion</label>
-        <input type="text" class="form-control" required
-        [(ngModel)]="colectivoInput.descripcion" name="descripcion">
+        <input type="text" class="form-control" name="descripcion"
+          [(ngModel)]="colectivoModel.descripcion" required #descripcion="ngModel">
+        <div [hidden]="descripcion.valid || descripcion.pristine"
+             class="alert alert-danger">
+             La descripcion es obligatoria
+        </div>
       </div>
-
       <div class="form-group">
-        <label for="color">Color</label>
-        <input type="text" class="form-control" required
-        [(ngModel)]="colectivoInput.color" name="color">
+        <label for="color">Color de la ruta</label>
+        <input type="color" class="form-control" name="color">
       </div>
+      <div class="form-group">
+        <label for="ruta">Ruta</label>
+        <ng2-map center= "Concepcion del uruguay, Argentina" name="ruta">
 
-      <button type="submit" class="btn btn-success">Submit</button>
+          <map-polygon
+            [editable]="true"
+            [paths]="colectivoModel.ruta"
+            [strokeColor]="colectivoModel.color"
+            [strokeOpacity]="0.8"
+            [strokeWeight]="5"
+            [fillColor]="colectivoModel.color"
+            [fillOpacity]="0"
+            (initialized$)="onPolygonInit($event)"
+          ></map-polygon>
+
+        </ng2-map>
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="!colectivoForm.form.valid">Submit</button>
     </form>
-
-    <ng2-map *ngIf="colectivoInput != null" center= "Concepcion del uruguay, Argentina">
-
-    <map-polygon
-      [editable]="true"
-      [paths]="ruta"
-      [strokeColor]="colectivoInput.color"
-      [strokeOpacity]="0.8"
-      [strokeWeight]="2"
-      [fillColor]="'#FFC107'"
-      [fillOpacity]="0.35"
-      (initialized$)="onPolyInit($event)"
-      >
-     </map-polygon>
-
-    </ng2-map>
-
-    <button (click)="guardarRuta()">Guardar</button>
-
 </div>

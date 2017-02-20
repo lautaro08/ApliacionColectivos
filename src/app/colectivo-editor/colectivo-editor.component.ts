@@ -4,8 +4,7 @@ import { Colectivo } from './../shared/models/colectivo';
 import { Component, OnInit, Input} from '@angular/core';
 import { Router, ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
-import {Observable} from "rxjs/Rx";
-import 'rxjs/add/operator/switchMap';
+
 
 @Component({
   selector: 'app-colectivo-editor',
@@ -15,14 +14,7 @@ import 'rxjs/add/operator/switchMap';
 })
 export class ColectivoEditorComponent implements OnInit {
 
-  colectivoInput : any;
-  //el objeto poligono que tiene la ruta del colectivo
-  ruta : any[] = [];
-
-  polygono : any;
-
-  id: any;
-
+  //path predeterminado 
   paths : any = [
     {lat:-32.489723535115274,lng:-58.25878143310547},
     {lat:-32.49406725857569,lng:-58.25921058654785},
@@ -30,70 +22,75 @@ export class ColectivoEditorComponent implements OnInit {
     {lat:-32.472636188236606,lng:-58.22779655456543}
   ];
 
+  //colectivo usado para interactuar con el formulario
+  colectivoModel : Colectivo;
+
   submitted = false;
 
+  //flag que indica si el colectivo es nuevo o se esta editando
+  creando : boolean;
+
+  //referencia al poligono de la ruta para extraer los cambios que se hacen a la ruta
+  polygon : google.maps.Polygon; 
+
   constructor(
-    public afService: AfService,
-    private route: ActivatedRoute,
-    private location: Location
-  ){}
+    //Se injecta el servicio de firebase para poder guardar el nuevo colectivo
+    private afService: AfService,
+    private router: Router,
+    private route: ActivatedRoute
+    ) { }
 
   ngOnInit() {
-    this.id = this.route.snapshot.params['id'];
-    console.log(this.id);
-    if(this.id == 'nuevo'){
-       this.colectivoInput = new Colectivo('','', '', '#0000e6', this.paths);
-       this.ruta = this.paths;
-       console.log('nuevo colectivo cargado en pantalla');
+    //obtiene el parametro id de la url
+    var id = this.route.snapshot.params['id'];
+    this.creando = (id === 'nuevo');
+    if(this.creando){
+      //si se esta creando un colectivo
+      this.colectivoModel = new Colectivo('', '', '', '#000000', this.paths);
     }else{
-      this.afService.getColectivo(this.id)
+      //si se esta editando se obtiene de la bd y se carga en colectivoModel
+      this.afService.getColectivo(id)
       .do(console.log)
-      .subscribe(snapshot =>{         
+      .subscribe(snapshot =>{        
         if(snapshot.val() != null){      
-          console.log(snapshot.val());     
-
-
-
+          this.colectivoModel = Colectivo.fromJson(snapshot.val());    
+          this.colectivoModel.$key = snapshot.key;
+          this.colectivoModel.ruta = [];
           for( let key in snapshot.val().ruta){
-            console.log(snapshot.val().ruta[key]);
-            this.ruta.push(snapshot.val().ruta[key]);
-          }
-
-
-
-
-          this.colectivoInput = snapshot.val();         
+            this.colectivoModel.ruta.push(snapshot.val().ruta[key]);
+          }      
         }       
-      console.log(this.colectivoInput);
-    });
-  }}
-
-  onSubmit() { 
-    console.log('colectivo guardado');
-    this.submitted = true; 
-    this.guardarRuta();
-    console.log('id', this.id);
-    if(this.id === 'nuevo'){
-      this.afService.createNewColectivo(this.colectivoInput);
-    }else{
-      this.afService.updateColectivo(this.colectivoInput);
+        console.log(this.colectivoModel);
+      });
     }
   }
 
-  onPolyInit(polygon){
-    console.log('polygon', polygon);
-    this.polygono = polygon;
-  }
-
-  guardarRuta(){
-    var auxPath = [];
-    this.polygono.getPath().getArray().forEach(
-      function(element, index){
-        auxPath.push(element.toJSON());
+  onSubmit(){
+    this.submitted = true;
+    var colectivo = this.colectivoModel;
+    //se limpia la ruta anterior para poder guardar el path modificado
+    colectivo.ruta = [];
+    this.polygon.getPath().getArray().forEach(
+      function(element, index){      
+        colectivo.ruta.push(element.toJSON());
       }
     );   
-    this.colectivoInput.ruta = auxPath;
-    console.log(auxPath);
+    if(this.creando){
+      this.afService.createNewColectivo(this.colectivoModel);
+    }else{
+      this.afService.updateColectivo(this.colectivoModel);
+    }   
+    this.router.navigate(['/recorridos']);
+  }
+
+  onPolygonInit(poligono){
+    //se cguarda la referencia al poligono para poder obtener el path modificado
+    console.log('poligono referenciado');
+    this.polygon = poligono;
+  }
+
+  colorChange(newColor){
+    //metodo para actualizar los valores ya que el selector de color no soporta NgModel
+    this.colectivoModel.color = newColor;
   }
 }
-

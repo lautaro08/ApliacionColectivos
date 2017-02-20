@@ -46,14 +46,12 @@ export class AfService {
   }
 
   updateColectivo(colectivo: any) {
-    var nuevoColectivo = {
-        nombre: colectivo.nombre,
+    this.afDb.object('/colectivos/'+colectivo.$key).update({
+      nombre: colectivo.nombre,
         descripcion: colectivo.descripcion,
         color: colectivo.color,
         ruta: colectivo.ruta
-    };
-    console.log(nuevoColectivo);
-    this.afDb.object('/colectivos/'+colectivo.$key).update(nuevoColectivo)
+    })
       .then(_ => console.log('exito al guardar el colectivo'))
       .catch(err => console.log(err, 'tenes un alto error amigo'));
   }

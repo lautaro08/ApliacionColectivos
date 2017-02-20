@@ -35,11 +35,7 @@ export const routeConfig : Routes = [
     },
     {
         path: 'nuevoColectivo',
-        component: ColectivoNuevoComponent
-    },
-    {
-        path: 'editorColectivo',
-        redirectTo: 'nuevoColectivo',
+        redirectTo: 'editorColectivo/nuevo',
         pathMatch: 'full'
     },
     fallbackRoute,

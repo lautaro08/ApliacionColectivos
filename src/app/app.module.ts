@@ -19,7 +19,6 @@ import { firebaseConfig } from './config/firebase-config';
 import { ColectivoEditorComponent } from './colectivo-editor/colectivo-editor.component';
 import { Ng2MapModule} from 'ng2-map';
 import { RecorridosComponent } from './recorridos/recorridos.component';
-import { ColectivoNuevoComponent } from './colectivo-nuevo/colectivo-nuevo.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +26,7 @@ import { ColectivoNuevoComponent } from './colectivo-nuevo/colectivo-nuevo.compo
     MapComponent,
     AdminComponent,
     ColectivoEditorComponent,
-    RecorridosComponent,
-    ColectivoNuevoComponent
+    RecorridosComponent
   ],
   imports: [
     BrowserModule,

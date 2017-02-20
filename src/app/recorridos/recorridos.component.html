@@ -18,7 +18,7 @@ center= "Concepcion del uruguay, Argentina">
 
 </ng2-map>
 
-<ul class="colectivos">
+<ul  *ngIf="colectivos != null" class="colectivos">
     <li *ngFor="let colectivo of colectivos" 
       [class.selected]="colectivo === selectedColectivo">
       <a [routerLink]="['/editorColectivo', colectivo.$key]">
