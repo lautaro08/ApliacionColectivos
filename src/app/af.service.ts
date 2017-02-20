@@ -29,13 +29,14 @@ export class AfService {
   createNewColectivo(colectivo:any) {
       var db = this.afDb;
       var colectivoRef = db.list('/colectivos').push();
-      console.log('colectivoRef: ', colectivoRef.key);
       var nuevoColectivo = {
         nombre: colectivo.nombre,
         descripcion: colectivo.descripcion,
         color: colectivo.color
       };
-      colectivoRef.set(nuevoColectivo);
+      colectivoRef.set(nuevoColectivo)
+        .then(_ => console.log('exito al crear el nuevo colectivo'))
+        .catch(err => console.log(err, 'Error al guardar colectivo en firebase'));
       colectivo.ruta.forEach(
         function(element, index){
           db.list('colectivos/'+colectivoRef.key+'/ruta').push(element);

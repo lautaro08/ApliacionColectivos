@@ -1,3 +1,8 @@
+<md-toolbar>
+      <button md-button (click)="sidenav.toggle()"><md-icon>menu</md-icon></button>
+      <span> Colectivos Uruguay </span>
+</md-toolbar>  
+
 <md-sidenav-container class="example-container">
 
     <md-sidenav #sidenav mode="side" class="app-sidenav">
@@ -15,11 +20,6 @@
       </ul>
       
     </md-sidenav>
-
-    <md-toolbar>
-      <button md-button (click)="sidenav.toggle()"><md-icon>menu</md-icon></button>
-      <span> Colectivos Uruguay </span>
-    </md-toolbar>  
 
     <div class="app-content">
       <router-outlet></router-outlet>

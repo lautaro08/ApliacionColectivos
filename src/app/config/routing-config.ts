@@ -1,3 +1,4 @@
+import { ColectivoNuevoComponent } from './../colectivo-nuevo/colectivo-nuevo.component';
 import { RecorridosComponent } from './../recorridos/recorridos.component';
 import { ColectivoEditorComponent } from './../colectivo-editor/colectivo-editor.component';
 import {Route, Routes} from "@angular/router";
@@ -33,8 +34,12 @@ export const routeConfig : Routes = [
         component: ColectivoEditorComponent
     },
     {
+        path: 'nuevoColectivo',
+        component: ColectivoNuevoComponent
+    },
+    {
         path: 'editorColectivo',
-        redirectTo: 'editorColectivo/nuevo',
+        redirectTo: 'nuevoColectivo',
         pathMatch: 'full'
     },
     fallbackRoute,
