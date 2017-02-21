@@ -6,29 +6,22 @@ export class Colectivo {
         public nombre: string,
         public descripcion: string,
         public color: string,
+        public paradas: any[],
         public ruta: any[]) {
 
-    }
-
-    obtenerPaths(): any[] {
-        var paths;
-        for(let punto of this.ruta) {
-            console.log('Clase colectivo:', punto);
-            paths.push({lat: punto.lat, lng: punto.lng})
-        }
-        return paths;
     }
 
     static fromJsonList(array): Colectivo[] {
         return array.map(Colectivo.fromJson);
     }
 
-    static fromJson({$key, nombre, descripcion, color, ruta}): Colectivo {
+    static fromJson({$key, nombre, descripcion, color, paradas, ruta}): Colectivo {
         return new Colectivo(
             $key,
             nombre,
             descripcion,
             color,
+            paradas,
             ruta
         );
     }

@@ -42,6 +42,11 @@ export class AfService {
           db.list('colectivos/'+colectivoRef.key+'/ruta').push(element);
         }
       );
+      colectivo.paradas.forEach(
+        function(element, index){
+          db.list('colectivos/'+colectivoRef.key+'/paradas').push(element);
+        }
+      );
       
   }
 
@@ -50,6 +55,7 @@ export class AfService {
       nombre: colectivo.nombre,
         descripcion: colectivo.descripcion,
         color: colectivo.color,
+        paradas: colectivo.paradas,
         ruta: colectivo.ruta
     })
       .then(_ => console.log('exito al guardar el colectivo'))

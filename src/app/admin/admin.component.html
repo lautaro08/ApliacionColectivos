@@ -1,12 +1,24 @@
-<ul class="colectivos">
-    <li *ngFor="let colectivo of colectivos" 
-      [class.selected]="colectivo === selectedColectivo">
-      <a [routerLink]="['/editorColectivo', colectivo.$key]">
-        <span class="badge">{{colectivo.nombre}}</span>
-        <span class="badge">{{colectivo.descripcion}}</span>
-        <span class="badge">{{colectivo.$key}}</span>
-      </a>
-    </li>
-</ul>
+<md-tab-group>
+  <md-tab label="Colectivo">
+    <md-list>
+      <md-list-item *ngFor="let colectivo of colectivos">
+        <h3 md-line> {{colectivo.nombre}} </h3>
+        <p md-line>
+          <span> {{colectivo.descripcion}} </span>
+          <span class="demo-2"> key: {{colectivo.$key}} </span>
+        </p>
+      </md-list-item>
+    </md-list>
 
-<a href="/nuevoColectivo"><md-icon>create</md-icon>Crear nuevo colectivo</a>
+<a routerLink="/nuevoColectivo"><md-icon>create</md-icon>Crear nuevo colectivo</a>
+  </md-tab>
+  <md-tab label="Recorrido">
+    <h1>Tab para el administrador de recorridos</h1>
+    <p>...</p>
+  </md-tab>
+  <md-tab label="Paradas">
+    <h1>Tab para el administrador de paradas</h1>
+    <p>...</p>
+  </md-tab>
+</md-tab-group>
+

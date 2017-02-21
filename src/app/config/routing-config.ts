@@ -1,4 +1,3 @@
-import { ColectivoNuevoComponent } from './../colectivo-nuevo/colectivo-nuevo.component';
 import { RecorridosComponent } from './../recorridos/recorridos.component';
 import { ColectivoEditorComponent } from './../colectivo-editor/colectivo-editor.component';
 import {Route, Routes} from "@angular/router";

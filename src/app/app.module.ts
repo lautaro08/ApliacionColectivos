@@ -10,10 +10,8 @@ import { AdminComponent } from './admin/admin.component';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import { MaterialModule } from '@angular/material';
-
 import { RouterModule, Routes } from '@angular/router';
 import { routeConfig } from './config/routing-config';
-
 import { AngularFireModule } from 'angularfire2';
 import { firebaseConfig } from './config/firebase-config';
 import { ColectivoEditorComponent } from './colectivo-editor/colectivo-editor.component';

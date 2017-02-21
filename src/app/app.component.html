@@ -7,17 +7,27 @@
 
     <md-sidenav #sidenav mode="side" class="app-sidenav">
       Menu de mierda
-      <ul>
-        <li>
-          <a routerLink="/recorridos"><md-icon>directions_bus</md-icon>recorridos</a>
-        </li>
-        <li>
-          <a routerLink="/"><md-icon>donut_small</md-icon>estadisticas</a>
-        </li>
-        <li>
-          <a routerLink="/admin"><md-icon>vpn_key</md-icon>Administrador</a>
-        </li>
-      </ul>
+      <md-list>
+        <md-list-item> 
+          <button md-button
+            (click)="router.navigate(['/recorridos'])">
+            <md-icon>directions_bus</md-icon> Home 
+          </button>
+        </md-list-item>
+        <md-list-item> 
+          <button md-button
+            (click)="router.navigate(['/home'])">
+            <md-icon>my_location</md-icon> Como llegar?
+          </button>
+        </md-list-item>
+        <md-list-item>
+          <button md-button
+            (click)="router.navigate(['/admin'])">
+            <md-icon>vpn_key</md-icon> Administrador
+          </button>  
+        </md-list-item>
+        
+      </md-list>
       
     </md-sidenav>
 
