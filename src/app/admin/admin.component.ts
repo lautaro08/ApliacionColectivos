@@ -34,4 +34,12 @@ export class AdminComponent implements OnInit {
     console.log("listas obtenidas desde AdService");
   }
 
+  removeColectivo(id: string){
+    this.afService.removeColectivo(id);
+  }
+
+  removeRecorrido(id: string){
+    this.afService.removeRecorrido(id);
+  }
+
 }

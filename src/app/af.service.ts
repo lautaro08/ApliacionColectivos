@@ -48,6 +48,18 @@ export class AfService {
         .map(results => Colectivo.fromJson(results[0]));*/
   }
 
+  removeColectivo(id : string){
+    this.af.database.object("/colectivos/"+id).remove()
+      .then(_ => console.log('exito al eliminar el colectivo'))
+      .catch(err => console.log(err, 'Error al eliminar el colectivo de firebase'));
+  }
+
+  removeRecorrido(id : string){
+    this.af.database.object("/recorridos/"+id).remove()
+      .then(_ => console.log('exito al eliminar el recorrido'))
+      .catch(err => console.log(err, 'Error al eliminar el recorrido de firebase'));
+  }
+
   createNewColectivo(colectivo:any) {
       var db = this.afDb;
       var colectivoRef = db.list('/colectivos').push();

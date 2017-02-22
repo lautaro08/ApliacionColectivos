@@ -21,7 +21,7 @@
                 <button class="boton_editar" md-raised-button><md-icon>mode_edit</md-icon></button>
               </a>
             </td>
-            <td><button class="boton_eliminar" md-raised-button><md-icon>delete</md-icon></button></td>
+            <td><button class="boton_eliminar" md-raised-button (click)="removeColectivo(colectivo.$key)"><md-icon>delete</md-icon></button></td>
           </tr>
         </tbody>
       </table>
@@ -55,7 +55,7 @@
                 <button class="boton_editar" md-raised-button><md-icon>mode_edit</md-icon></button>
               </a>
             </td>
-            <td><button class="boton_eliminar" md-raised-button><md-icon>delete</md-icon></button></td>
+            <td><button class="boton_eliminar" md-raised-button (click)="removeRecorrido(recorrido.$key)"><md-icon>delete</md-icon></button></td>
           </tr>
         </tbody>
       </table>
