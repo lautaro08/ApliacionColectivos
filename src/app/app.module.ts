@@ -14,17 +14,19 @@ import { RouterModule, Routes } from '@angular/router';
 import { routeConfig } from './config/routing-config';
 import { AngularFireModule } from 'angularfire2';
 import { firebaseConfig } from './config/firebase-config';
-import { ColectivoEditorComponent } from './colectivo-editor/colectivo-editor.component';
+import { RecorridoFormComponent } from './colectivo-editor/recorrido-form.component';
 import { Ng2MapModule} from 'ng2-map';
 import { RecorridosComponent } from './recorridos/recorridos.component';
+import { ColectivoFormComponent } from './colectivo-form/colectivo-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
     AdminComponent,
-    ColectivoEditorComponent,
-    RecorridosComponent
+    RecorridoFormComponent,
+    RecorridosComponent,
+    ColectivoFormComponent
   ],
   imports: [
     BrowserModule,

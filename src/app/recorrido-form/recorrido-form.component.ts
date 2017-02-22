@@ -1,17 +1,16 @@
-import { Ruta } from './../shared/models/ruta';
+import { Recorrido } from './../shared/models/recorrido';
 import { AfService } from './../af.service';
-import { Colectivo } from './../shared/models/colectivo';
 import { Component, OnInit, Input} from '@angular/core';
 import { Router, ActivatedRoute, Params }   from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-colectivo-editor',
-  templateUrl: './colectivo-editor.component.html',
-  styleUrls: ['./colectivo-editor.component.css'],
+  selector: 'app-recorrido-form',
+  templateUrl: './recorrido-form.component.html',
+  styleUrls: ['./recorrido-form.component.css'],
   providers: [AfService]
 })
-export class ColectivoEditorComponent implements OnInit {
+export class RecorridoFormComponent implements OnInit {
 
   //path predeterminado 
   paths : any = [
@@ -21,25 +20,25 @@ export class ColectivoEditorComponent implements OnInit {
     {lat:-32.472636188236606,lng:-58.22779655456543}
   ];
 
-  //paradas del Colectivo
+  //paradas del recorrido
   paradasMarkers : google.maps.Marker[] = [];
 
-  //colectivo usado para interactuar con el formulario
-  colectivoModel : Colectivo;
+  //recorrido usado para interactuar con el formulario
+  recorridoModel : Recorrido;
 
   //variable para mantener el color que se va modificando
   colorAuxiliar : string;
 
   submitted = false;
 
-  //flag que indica si el colectivo es nuevo o se esta editando
+  //flag que indica si el recorrido es nuevo o se esta editando
   creando : boolean;
 
   //referencia al poligono de la ruta para extraer los cambios que se hacen a la ruta
   polygon : google.maps.Polygon; 
 
   constructor(
-    //Se injecta el servicio de firebase para poder guardar el nuevo colectivo
+    //Se injecta el servicio de firebase para poder guardar el nuevo recorrido
     private afService: AfService,
     private router: Router,
     private route: ActivatedRoute
@@ -50,51 +49,41 @@ export class ColectivoEditorComponent implements OnInit {
     var id = this.route.snapshot.params['id'];
     this.creando = (id === 'nuevo');
     if(this.creando){
-      //si se esta creando un colectivo
-      this.colectivoModel = new Colectivo('', '', '', '#000000', [], this.paths);
+      //si se esta creando un recorrido
+      this.recorridoModel = new Recorrido('', '', '', '#000000', this.paths);
     }else{
-      //si se esta editando se obtiene de la bd y se carga en colectivoModel
-      this.afService.getColectivo(id)
+      //si se esta editando se obtiene de la bd y se carga en recorridoModel
+      this.afService.getRecorrido(id)
       .do(console.log)
       .subscribe(snapshot =>{        
         if(snapshot.val() != null){      
-          this.colectivoModel = Colectivo.fromJson(snapshot.val());    
-          this.colectivoModel.$key = snapshot.key;
-          this.colectivoModel.ruta = [];
-          this.colectivoModel.paradas = [];
+          this.recorridoModel = Recorrido.fromJson(snapshot.val());    
+          this.recorridoModel.$key = snapshot.key;
+          this.recorridoModel.ruta = [];
           for( let key in snapshot.val().ruta){
-            this.colectivoModel.ruta.push(snapshot.val().ruta[key]);
-          }      
-          for( let key in snapshot.val().paradas){
-            this.colectivoModel.paradas.push(snapshot.val().paradas[key]);
-          }  
+            this.recorridoModel.ruta.push(snapshot.val().ruta[key]);
+          }       
         }       
-        console.log(this.colectivoModel);
+        console.log(this.recorridoModel);
       });
     }
   }
 
   onSubmit(){
     this.submitted = true;
-    var colectivo = this.colectivoModel;
+    var recorrido = this.recorridoModel;
     //se limpia la ruta anterior para poder guardar el path modificado
-    colectivo.ruta = [];
-    colectivo.paradas = [];
+    recorrido.ruta = [];
     this.polygon.getPath().getArray().forEach(
       function(element, index){      
-        colectivo.ruta.push(element.toJSON());
+        recorrido.ruta.push(element.toJSON());
       }
-    );   
-    this.paradasMarkers.forEach(
-      function(element, index){      
-        colectivo.paradas.push(element.getPosition().toJSON());
-      }
-    );   
-    colectivo.color = this.colorAuxiliar;
+    );    
+    recorrido.color = this.colorAuxiliar;
     if(this.creando){
-      this.afService.createNewColectivo(this.colectivoModel);
+      this.afService.createNewRecorrido(this.recorridoModel);
     }else{
-      this.afService.updateColectivo(this.colectivoModel);
+      this.afService.updateRecorrido(this.recorridoModel);
     }   
     this.router.navigate(['/recorridos']);
   }
@@ -118,6 +107,6 @@ export class ColectivoEditorComponent implements OnInit {
 
   //funcion que agrega los marcadores de las paradas
   mapClicked($event){
-    this.colectivoModel.paradas.push($event.latLng);
+    //this.recorridoModel.paradas.push($event.latLng);
   }
 }

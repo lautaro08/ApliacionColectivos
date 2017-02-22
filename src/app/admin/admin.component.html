@@ -1,20 +1,69 @@
 <md-tab-group>
   <md-tab label="Colectivo">
-    <md-list>
-      <md-list-item *ngFor="let colectivo of colectivos">
-        <h3 md-line> {{colectivo.nombre}} </h3>
-        <p md-line>
-          <span> {{colectivo.descripcion}} </span>
-          <span class="demo-2"> key: {{colectivo.$key}} </span>
-        </p>
-      </md-list-item>
-    </md-list>
+    <!-- Table -->
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Patente</th>
+            <th>Key</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let colectivo of colectivos">
+            <td>{{colectivo.id}}</td>
+            <td>{{colectivo.patente}}</td>
+            <td>{{colectivo.$key}}</td>
+            <td>
+              <a [routerLink]="['/colectivos', colectivo.$key]">
+                <button class="boton_editar" md-raised-button><md-icon>mode_edit</md-icon></button>
+              </a>
+            </td>
+            <td><button class="boton_eliminar" md-raised-button><md-icon>delete</md-icon></button></td>
+          </tr>
+        </tbody>
+      </table>
 
-<a routerLink="/nuevoColectivo"><md-icon>create</md-icon>Crear nuevo colectivo</a>
+    <span class="app-action" [class.m2app-dark]="true">
+      <a [routerLink]="['/colectivos', nuevo]">
+        <button md-fab><md-icon>add</md-icon></button>
+      </a>
+    </span>
+
   </md-tab>
   <md-tab label="Recorrido">
-    <h1>Tab para el administrador de recorridos</h1>
-    <p>...</p>
+    <!-- Table -->
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Key</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let recorrido of recorridos">
+            <td>{{recorrido.nombre}}</td>
+            <td>{{recorrido.descripcion}}</td>
+            <td>{{recorrido.$key}}</td>
+            <td>
+              <a [routerLink]="['/recorridos', recorrido.$key]">
+                <button class="boton_editar" md-raised-button><md-icon>mode_edit</md-icon></button>
+              </a>
+            </td>
+            <td><button class="boton_eliminar" md-raised-button><md-icon>delete</md-icon></button></td>
+          </tr>
+        </tbody>
+      </table>
+      <span class="app-action" [class.m2app-dark]="true">
+      <a routerLink="/recorridos/nuevo">
+        <button md-fab><md-icon>add</md-icon></button>
+      </a>
+    </span>
   </md-tab>
   <md-tab label="Paradas">
     <h1>Tab para el administrador de paradas</h1>

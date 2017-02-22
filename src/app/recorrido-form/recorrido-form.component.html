@@ -1,10 +1,10 @@
 <div class="container">
-    <h1>Crear nuevo colectivo</h1>
-    <form (ngSubmit)="onSubmit()" #colectivoForm="ngForm">
+    <h1>Crear nuevo recorrido</h1>
+    <form (ngSubmit)="onSubmit()" #recorridoForm="ngForm">
       <div class="form-group">
         <label for="nombre">Nombre</label>
         <input type="text" class="form-control" name="nombre" 
-          [(ngModel)]="colectivoModel.nombre" required #nombre="ngModel">
+          [(ngModel)]="recorridoModel.nombre" required #nombre="ngModel">
         <div [hidden]="nombre.valid || nombre.pristine"
              class="alert alert-danger">
              El nombre es obligatorio
@@ -13,7 +13,7 @@
       <div class="form-group">
         <label for="descripcion">Descripcion</label>
         <input type="text" class="form-control" name="descripcion"
-          [(ngModel)]="colectivoModel.descripcion" required #descripcion="ngModel">
+          [(ngModel)]="recorridoModel.descripcion" required #descripcion="ngModel">
         <div [hidden]="descripcion.valid || descripcion.pristine"
              class="alert alert-danger">
              La descripcion es obligatoria
@@ -21,7 +21,7 @@
       </div>
       <div class="form-group">
         <label for="color">Color de la ruta</label>
-        <input type="color" class="form-control" name="color" [ngModel]="colectivoModel.color" (ngModelChange)="colorChange($event)">
+        <input type="color" class="form-control" name="color" [ngModel]="recorridoModel.color" (ngModelChange)="colorChange($event)">
       </div>
       <div class="form-group">
         <label for="ruta">Ruta</label>
@@ -30,24 +30,17 @@
           <map-polygon
             [editable]="true"
             [clickable]="false"
-            [paths]="colectivoModel.ruta"
-            [strokeColor]="colectivoModel.color"
+            [paths]="recorridoModel.ruta"
+            [strokeColor]="recorridoModel.color"
             [strokeOpacity]="0.8"
             [strokeWeight]="5"
-            [fillColor]="colectivoModel.color"
+            [fillColor]="recorridoModel.color"
             [fillOpacity]="0"
             (initialized$)="onPolygonInit($event)"
           ></map-polygon>
 
-          <marker *ngFor="let parada of colectivoModel.paradas" 
-            [position]="parada"
-            [draggable]="true"
-            (initialized$)="onMarkerInit($event)"
-            >
-          </marker>
-
         </ng2-map>
       </div>
-      <button type="submit" class="btn btn-success" [disabled]="!colectivoForm.form.valid">Submit</button>
+      <button type="submit" class="btn btn-success" [disabled]="!recorridoForm.form.valid">Submit</button>
     </form>
 </div>

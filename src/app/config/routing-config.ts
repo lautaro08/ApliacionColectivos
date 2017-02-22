@@ -1,5 +1,6 @@
+import { ColectivoFormComponent } from './../colectivo-form/colectivo-form.component';
+import { RecorridoFormComponent } from './../colectivo-editor/recorrido-form.component';
 import { RecorridosComponent } from './../recorridos/recorridos.component';
-import { ColectivoEditorComponent } from './../colectivo-editor/colectivo-editor.component';
 import {Route, Routes} from "@angular/router";
 import { AppComponent } from '../app.component';
 import { MapComponent } from '../map/map.component';
@@ -18,24 +19,27 @@ const fallbackRoute : Route = {
 export const routeConfig : Routes = [
     {
         path: 'home',
-        component: MapComponent
+        component: RecorridosComponent
     },
     {
         path: 'recorridos',
         component: RecorridosComponent
     },
     {
+        path: 'comollegar',
+        component: MapComponent
+    },
+    {
         path: 'admin',
         component: AdminComponent
     },
     {
-        path: 'editorColectivo/:id',
-        component: ColectivoEditorComponent
+        path: 'recorridos/:id',
+        component: RecorridoFormComponent
     },
     {
-        path: 'nuevoColectivo',
-        redirectTo: 'editorColectivo/nuevo',
-        pathMatch: 'full'
+        path: 'colectivos/:id',
+        component: ColectivoFormComponent
     },
     fallbackRoute,
     indexRoute

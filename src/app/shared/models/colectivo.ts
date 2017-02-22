@@ -3,11 +3,12 @@ export class Colectivo {
 
     constructor(
         public $key:string,
-        public nombre: string,
-        public descripcion: string,
-        public color: string,
-        public paradas: any[],
-        public ruta: any[]) {
+        patente : string,
+        marca : string,
+        modelo : string,
+        activo : boolean,
+        ubicacion : string,
+        recorridos : any[]) {
 
     }
 
@@ -15,14 +16,15 @@ export class Colectivo {
         return array.map(Colectivo.fromJson);
     }
 
-    static fromJson({$key, nombre, descripcion, color, paradas, ruta}): Colectivo {
+    static fromJson({$key, patente, marca, modelo, activo, ubicacion, recorridos}): Colectivo {
         return new Colectivo(
             $key,
-            nombre,
-            descripcion,
-            color,
-            paradas,
-            ruta
+            patente,
+            marca,
+            modelo,
+            activo,
+            ubicacion,
+            recorridos
         );
     }
 

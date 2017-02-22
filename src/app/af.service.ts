@@ -1,3 +1,5 @@
+import { Parada } from './shared/models/parada';
+import { Recorrido } from './shared/models/recorrido';
 import { Colectivo } from './shared/models/colectivo';
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs/Rx";
@@ -18,8 +20,28 @@ export class AfService {
         .map(Colectivo.fromJsonList);
   }
 
+  findAllRecorridos():Observable<Recorrido[]> {
+      return this.afDb.list('recorridos')
+        .do(console.log)
+        .map(Recorrido.fromJsonList);
+  }
+
+  findAllParadas():Observable<Parada[]> {
+      return this.afDb.list('paradas')
+        .do(console.log)
+        .map(Parada.fromJsonList);
+  }
+
   getColectivo(id: string):Observable<Colectivo>{
     return this.af.database.object("/colectivos/"+id,{preserveSnapshot:true});       
+    /*
+    return this.afDb.list('colectivos')
+        .filter(results => results.$key === id)
+        .map(results => Colectivo.fromJson(results[0]));*/
+  }
+
+  getRecorrido(id: string):Observable<Recorrido>{
+    return this.af.database.object("/recorridos/"+id,{preserveSnapshot:true});       
     /*
     return this.afDb.list('colectivos')
         .filter(results => results.$key === id)
@@ -30,36 +52,55 @@ export class AfService {
       var db = this.afDb;
       var colectivoRef = db.list('/colectivos').push();
       var nuevoColectivo = {
-        nombre: colectivo.nombre,
-        descripcion: colectivo.descripcion,
-        color: colectivo.color
+        id: colectivo.id,
+        patente: colectivo.patente,
+        marca: colectivo.marca,
+        modelo: colectivo.modelo,
+        activo: false,
       };
       colectivoRef.set(nuevoColectivo)
         .then(_ => console.log('exito al crear el nuevo colectivo'))
-        .catch(err => console.log(err, 'Error al guardar colectivo en firebase'));
-      colectivo.ruta.forEach(
-        function(element, index){
-          db.list('colectivos/'+colectivoRef.key+'/ruta').push(element);
-        }
-      );
-      colectivo.paradas.forEach(
-        function(element, index){
-          db.list('colectivos/'+colectivoRef.key+'/paradas').push(element);
-        }
-      );
-      
+        .catch(err => console.log(err, 'Error al guardar colectivo en firebase'));  
   }
 
   updateColectivo(colectivo: any) {
     this.afDb.object('/colectivos/'+colectivo.$key).update({
-      nombre: colectivo.nombre,
-        descripcion: colectivo.descripcion,
-        color: colectivo.color,
-        paradas: colectivo.paradas,
-        ruta: colectivo.ruta
+        id: colectivo.id,
+        patente: colectivo.patente,
+        marca: colectivo.marca,
+        modelo: colectivo.modelo
     })
-      .then(_ => console.log('exito al guardar el colectivo'))
-      .catch(err => console.log(err, 'tenes un alto error amigo'));
+      .then(_ => console.log('exito al actualizar el colectivo'))
+      .catch(err => console.log(err, 'terror al actualizar el colectivo'));
+  }
+
+  createNewRecorrido(recorrido:any) {
+      var db = this.afDb;
+      var recorridoRef = db.list('/recorridos').push();
+      var nuevoRecorrido = {
+        nombre: recorrido.nombre,
+        descripcion: recorrido.descripcion,
+        color: recorrido.color
+      };
+      recorridoRef.set(nuevoRecorrido)
+        .then(_ => console.log('exito al crear el nuevo recorrido'))
+        .catch(err => console.log(err, 'Error al guardar recorrido en firebase'));
+      recorrido.ruta.forEach(
+        function(element, index){
+          db.list('recorridos/'+recorridoRef.key+'/ruta').push(element);
+        }
+      );    
+  }
+
+  updateRecorrido(recorrido: any) {
+    this.afDb.object('/colectivos/'+recorrido.$key).update({
+        nombre: recorrido.nombre,
+        descripcion: recorrido.descripcion,
+        color: recorrido.color,
+        ruta: recorrido.ruta
+    })
+      .then(_ => console.log('exito al actualizar el recorrido'))
+      .catch(err => console.log(err, 'error al actualizar recorrido'));
   }
 }
 

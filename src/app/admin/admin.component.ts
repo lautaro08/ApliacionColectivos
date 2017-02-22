@@ -1,3 +1,4 @@
+import { Recorrido } from './../shared/models/recorrido';
 import { Colectivo } from './../shared/models/colectivo';
 import { AfService } from './../af.service';
 import { Component, OnInit } from '@angular/core'
@@ -13,6 +14,7 @@ import {AngularFire, FirebaseListObservable} from 'angularfire2';
 export class AdminComponent implements OnInit {
 
   colectivos: Colectivo[];
+  recorridos: Recorrido[];
 
   constructor(private afService: AfService) { 
     
@@ -23,6 +25,11 @@ export class AdminComponent implements OnInit {
       .do(console.log)
       .subscribe(
         colectivos => colectivos = this.colectivos = colectivos
+      );
+    this.afService.findAllRecorridos()
+      .do(console.log)
+      .subscribe(
+        recorridos => recorridos = this.recorridos = recorridos
       );
     console.log("listas obtenidas desde AdService");
   }
