@@ -32,13 +32,14 @@ export class ColectivoFormComponent implements OnInit {
     this.creando = (id === 'nuevo');
     if(this.creando){
       //si se esta creando un colectivo
-      this.colectivoModel = new Colectivo('', '', '', '', 'false', '', []);
+      this.colectivoModel = new Colectivo('', '', '', '', '', 'false', '', []);
     }else{
       //si se esta editando se obtiene de la bd y se carga en colectivoModel
       this.afService.getColectivo(id)
       .do(console.log)
       .subscribe(snapshot =>{        
         if(snapshot.val() != null){      
+          console.log('ultimo error', snapshot.val());
           this.colectivoModel = Colectivo.fromJson(snapshot.val());    
           this.colectivoModel.$key = snapshot.key; 
         }       

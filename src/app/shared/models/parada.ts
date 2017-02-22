@@ -3,8 +3,8 @@ export class Parada {
 
     constructor(
         public $key:string,
-        ubicacion: string,
-        recorrido: any[]) {
+        public ubicacion: string,
+        public recorrido: any[]) {
 
     }
 
