@@ -10,6 +10,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecorridosComponent  {
   
+  ultimoSeleccionado : number = -1;
+
   recorridos : Recorrido[];
 
   poligonos: google.maps.Polygon[] = [];
@@ -43,20 +45,25 @@ export class RecorridosComponent  {
     console.log(index, res);
   }
 
-  recorridoSelected(index: number, color: string){
+  recorridoSelected(index: number){
     this.poligonos.forEach((poligono, i) => {
-      if(i != index){
+      if(i != index && index != this.ultimoSeleccionado){
         poligono.setOptions({
           strokeColor: '#888888',
           strokeOpacity: 0.3
         });
       }else{
         poligono.setOptions({
-          strokeColor: color,
+          strokeColor: this.recorridos[i].color,
           strokeOpacity: 0.8
         });
       }
     });
+    if(index === this.ultimoSeleccionado){
+      this.ultimoSeleccionado = -1;
+    }else{
+      this.ultimoSeleccionado = index;
+    }
   }
 
   aVerQueHay(){

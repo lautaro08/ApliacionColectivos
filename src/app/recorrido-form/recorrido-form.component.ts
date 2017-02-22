@@ -12,6 +12,9 @@ import { Location } from '@angular/common';
 })
 export class RecorridoFormComponent implements OnInit {
 
+  //puede ser CREAR NUEVO o EDITAR dependiendo
+  titulo : string;
+
   //path predeterminado 
   paths : any = [
     {lat:-32.489723535115274,lng:-58.25878143310547},
@@ -41,7 +44,8 @@ export class RecorridoFormComponent implements OnInit {
     //Se injecta el servicio de firebase para poder guardar el nuevo recorrido
     private afService: AfService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
     ) { }
 
   ngOnInit() {
@@ -50,9 +54,11 @@ export class RecorridoFormComponent implements OnInit {
     this.creando = (id === 'nuevo');
     if(this.creando){
       //si se esta creando un recorrido
+      this.titulo = 'Crear nuevo';
       this.recorridoModel = new Recorrido('', '', '', '#000000', this.paths);
     }else{
       //si se esta editando se obtiene de la bd y se carga en recorridoModel
+      this.titulo = 'Editar';
       this.afService.getRecorrido(id)
       .do(console.log)
       .subscribe(snapshot =>{        
@@ -108,5 +114,9 @@ export class RecorridoFormComponent implements OnInit {
   //funcion que agrega los marcadores de las paradas
   mapClicked($event){
     //this.recorridoModel.paradas.push($event.latLng);
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

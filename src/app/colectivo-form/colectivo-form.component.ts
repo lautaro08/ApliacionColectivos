@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AfService } from './../af.service';
 import { Colectivo } from './../shared/models/colectivo';
@@ -11,6 +12,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ColectivoFormComponent implements OnInit {
 
+  //puede ser CREAR NUEVO o EDITAR dependiendo
+  titulo : string;
+
   //colectivo usado para interactuar con el formulario
   colectivoModel : Colectivo;
 
@@ -23,7 +27,8 @@ export class ColectivoFormComponent implements OnInit {
     //Se injecta el servicio de firebase para poder guardar el nuevo colectivo
     private afService: AfService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
     ) { }
 
   ngOnInit() {
@@ -32,9 +37,11 @@ export class ColectivoFormComponent implements OnInit {
     this.creando = (id === 'nuevo');
     if(this.creando){
       //si se esta creando un colectivo
+      this.titulo = 'Crear nuevo';
       this.colectivoModel = new Colectivo('', '', '', '', '', 'false', '', []);
     }else{
       //si se esta editando se obtiene de la bd y se carga en colectivoModel
+      this.titulo = 'Editar';
       this.afService.getColectivo(id)
       .do(console.log)
       .subscribe(snapshot =>{        
@@ -56,6 +63,10 @@ export class ColectivoFormComponent implements OnInit {
       this.afService.updateColectivo(this.colectivoModel);
     }   
     this.router.navigate(['/admin']);
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 }

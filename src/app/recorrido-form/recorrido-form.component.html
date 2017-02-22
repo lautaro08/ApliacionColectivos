@@ -1,5 +1,6 @@
 <div class="container">
-    <h1>Crear nuevo recorrido</h1>
+    <button md-button (click)="goBack()"><md-icon>arrow_back</md-icon></button>
+    <span>{{titulo}} recorrido</span>
     <form (ngSubmit)="onSubmit()" #recorridoForm="ngForm">
       <div class="form-group">
         <label for="nombre">Nombre</label>

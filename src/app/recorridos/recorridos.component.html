@@ -18,13 +18,12 @@ center= "Concepcion del uruguay, Argentina">
 
 </ng2-map>
 
-<ul  *ngIf="recorridos != null" class="recorridos">
-    <li *ngFor="let recorrido of recorridos;  let i = index" 
-      [class.selected]="recorrido === selectedrecorrido" (click)="recorridoSelected(i, recorrido.color)">
-        <font color="recorrido.color">{{recorrido.nombre}}</font>
+<div *ngIf="recorridos != null" class="recorridos">
+  <md-card  *ngFor = "let recorrido of recorridos; let i = index"
+  [class.selected]="i === ultimoSeleccionado" (click)="recorridoSelected(i)">
+        <h1 [style.color]="recorrido.color">{{recorrido.nombre}}</h1>
         <span class="badge">{{recorrido.descripcion}}</span>
         <span class="badge">{{recorrido.$key}}</span>
-    </li>
-</ul>
-
+  </md-card>
+</div>
 <button (click)="aVerQueHay()">Apretame bayby</button>

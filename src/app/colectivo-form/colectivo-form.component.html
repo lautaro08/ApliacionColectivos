@@ -1,5 +1,6 @@
 <div class="container">
-    <h1>Crear nuevo colectivo</h1>
+    <button md-button (click)="goBack()"><md-icon>arrow_back</md-icon></button>
+    <span>{{titulo}} colectivo</span>
     <form (ngSubmit)="onSubmit()" #colectivoForm="ngForm">
 
       <div class="form-group">

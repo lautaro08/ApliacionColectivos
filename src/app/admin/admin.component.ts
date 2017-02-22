@@ -40,28 +40,25 @@ export class AdminComponent implements OnInit {
   }
 
   removeColectivo(id: string){
-    var confirm = this.openDialog('Eliminar colectivo', '¿esta seguro de eliminar este colectivo?');
-    console.log('dialog result ', confirm)
-    if(confirm){
-      this.afService.removeColectivo(id);
-    }  
+    let db = this.afService;
+    this.dialogsService
+      .confirm('Eliminar colectivo', '¿esta seguro de eliminar este colectivo?', this.viewContainerRef)
+      .subscribe(function onNext(res){
+        console.log(res);
+        if(res){
+          db.removeColectivo(id);
+        } 
+      }); 
   }
 
   removeRecorrido(id: string){
-    if(this.openDialog('Eliminar recorrido', '¿esta seguro de eliminar este recorrido?')){
-      this.afService.removeRecorrido(id);
-    }  
-  }
-
-  openDialog(titulo, mensaje): boolean {
-    var result;
+    let db = this.afService;
     this.dialogsService
-      .confirm(titulo, mensaje, this.viewContainerRef)
+      .confirm('Eliminar recorrido', '¿esta seguro de eliminar este recorrido?', this.viewContainerRef)
       .subscribe(function onNext(res){
-        result = res;
         console.log(res);
+        db.removeRecorrido(id);
       });
-    return result;
   }
 
 }
