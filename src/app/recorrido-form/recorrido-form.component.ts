@@ -85,7 +85,7 @@ export class RecorridoFormComponent implements OnInit {
     }else{
       this.afService.updateRecorrido(this.recorridoModel);
     }   
-    this.router.navigate(['/recorridos']);
+    this.router.navigate(['/recorridos/todos']);
   }
 
   onPolygonInit(poligono){

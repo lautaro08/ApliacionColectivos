@@ -22,16 +22,21 @@ export const routeConfig : Routes = [
         component: RecorridosComponent
     },
     {
-        path: 'recorridos',
-        component: RecorridosComponent
-    },
-    {
         path: 'comollegar',
         component: MapComponent
     },
     {
         path: 'admin',
         component: AdminComponent
+    },
+    {
+        path: 'recorridos',
+        component: RecorridosComponent
+    },
+    {
+        path: 'recorridos/todos',
+        redirectTo: 'recorridos',
+        pathMatch: 'full'
     },
     {
         path: 'recorridos/:id',

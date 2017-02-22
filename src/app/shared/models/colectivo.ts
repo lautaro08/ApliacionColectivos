@@ -6,7 +6,7 @@ export class Colectivo {
         patente : string,
         marca : string,
         modelo : string,
-        activo : boolean,
+        activo : string,
         ubicacion : string,
         recorridos : any[]) {
 

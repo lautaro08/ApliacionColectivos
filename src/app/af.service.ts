@@ -56,11 +56,12 @@ export class AfService {
         patente: colectivo.patente,
         marca: colectivo.marca,
         modelo: colectivo.modelo,
-        activo: false,
+        activo: 'false',
+        recorridos: []
       };
       colectivoRef.set(nuevoColectivo)
         .then(_ => console.log('exito al crear el nuevo colectivo'))
-        .catch(err => console.log(err, 'Error al guardar colectivo en firebase'));  
+        .catch(err => console.log(err, 'Error al guardar el colectivo en firebase'));
   }
 
   updateColectivo(colectivo: any) {
@@ -93,7 +94,7 @@ export class AfService {
   }
 
   updateRecorrido(recorrido: any) {
-    this.afDb.object('/colectivos/'+recorrido.$key).update({
+    this.afDb.object('/recorridos/'+recorrido.$key).update({
         nombre: recorrido.nombre,
         descripcion: recorrido.descripcion,
         color: recorrido.color,

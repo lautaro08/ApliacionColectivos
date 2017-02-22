@@ -1,4 +1,4 @@
-import { Colectivo } from './../shared/models/colectivo';
+import { Recorrido } from './../shared/models/recorrido';
 import { AfService } from './../af.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./recorridos.component.css'],
   providers: [AfService]
 })
-export class RecorridosComponent implements OnInit {
-
-  colectivos: Colectivo[];
+export class RecorridosComponent  {
+  
+  recorridos : Recorrido[];
 
   poligonos: google.maps.Polygon[] = [];
 
@@ -19,20 +19,20 @@ export class RecorridosComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.afService.findAllColectivos()
+    this.afService.findAllRecorridos()
       .do(console.log)
       .subscribe(
-        colectivos => colectivos = this.colectivos = colectivos
+        recorridos => recorridos = this.recorridos = recorridos
       );
-    console.log("listas obtenidas desde recorridos", this.colectivos);
+    console.log("listas obtenidas desde recorridos", this.recorridos);
   }
 
-  onPolygonInit(polygono, colectivo: Colectivo, index: number){
+  onPolygonInit(polygono, recorrido: Recorrido, index: number){
     this.poligonos.push(polygono);
     var path = [];
-    for( let key in colectivo.ruta){
-      console.log(colectivo.ruta[key]);
-      path.push(colectivo.ruta[key]);
+    for( let key in recorrido.ruta){
+      console.log(recorrido.ruta[key]);
+      path.push(recorrido.ruta[key]);
     }
     console.log(path);
     polygono.setPaths(path);
@@ -43,7 +43,7 @@ export class RecorridosComponent implements OnInit {
     console.log(index, res);
   }
 
-  colectivoSelected(index: number, color: string){
+  recorridoSelected(index: number, color: string){
     this.poligonos.forEach((poligono, i) => {
       if(i != index){
         poligono.setOptions({
@@ -60,7 +60,7 @@ export class RecorridosComponent implements OnInit {
   }
 
   aVerQueHay(){
-    console.log("listas obtenidas desde recorridos", this.colectivos);
+    console.log("listas obtenidas desde recorridos", this.recorridos);
     console.log("lista de poligonos", this.poligonos);
   }
 

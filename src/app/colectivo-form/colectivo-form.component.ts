@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-colectivo-form',
   templateUrl: './colectivo-form.component.html',
-  styleUrls: ['./colectivo-form.component.css']
+  styleUrls: ['./colectivo-form.component.css'],
+  providers: [AfService]
 })
 export class ColectivoFormComponent implements OnInit {
 
@@ -31,7 +32,7 @@ export class ColectivoFormComponent implements OnInit {
     this.creando = (id === 'nuevo');
     if(this.creando){
       //si se esta creando un colectivo
-      this.colectivoModel = new Colectivo('', '', '', '', false, '', []);
+      this.colectivoModel = new Colectivo('', '', '', '', 'false', '', []);
     }else{
       //si se esta editando se obtiene de la bd y se carga en colectivoModel
       this.afService.getColectivo(id)
@@ -48,13 +49,12 @@ export class ColectivoFormComponent implements OnInit {
 
   onSubmit(){
     this.submitted = true;
-    var recorrido = this.colectivoModel;
     if(this.creando){
       this.afService.createNewColectivo(this.colectivoModel);
     }else{
       this.afService.updateColectivo(this.colectivoModel);
     }   
-    this.router.navigate(['/recorridos']);
+    this.router.navigate(['/admin']);
   }
 
 }
