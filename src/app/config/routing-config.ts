@@ -1,5 +1,5 @@
 import { ColectivoFormComponent } from './../colectivo-form/colectivo-form.component';
-import { RecorridoFormComponent } from './../colectivo-editor/recorrido-form.component';
+import { RecorridoFormComponent } from './../recorrido-form/recorrido-form.component';
 import { RecorridosComponent } from './../recorridos/recorridos.component';
 import {Route, Routes} from "@angular/router";
 import { AppComponent } from '../app.component';
