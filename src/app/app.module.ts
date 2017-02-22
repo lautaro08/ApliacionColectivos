@@ -1,3 +1,4 @@
+import { DialogsService } from './shared/services/dialogs.service';
 import { GoogleMapNg2 } from './config/google-maps-config';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -18,6 +19,7 @@ import { firebaseConfig } from './config/firebase-config';
 import { RecorridoFormComponent } from './recorrido-form/recorrido-form.component';
 import { RecorridosComponent } from './recorridos/recorridos.component';
 import { ColectivoFormComponent } from './colectivo-form/colectivo-form.component';
+import { ConfirmDialog } from './shared/services/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { ColectivoFormComponent } from './colectivo-form/colectivo-form.componen
     AdminComponent,
     RecorridoFormComponent,
     RecorridosComponent,
-    ColectivoFormComponent
+    ColectivoFormComponent,
+    ConfirmDialog
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,13 @@ import { ColectivoFormComponent } from './colectivo-form/colectivo-form.componen
     AngularFireModule.initializeApp(firebaseConfig),
     GoogleMapNg2
   ],
-  providers: [],
+  exports: [
+        ConfirmDialog,
+    ],
+  providers: [DialogsService],
+  entryComponents: [
+        ConfirmDialog,
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
