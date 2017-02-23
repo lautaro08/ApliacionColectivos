@@ -8,7 +8,7 @@ export class Colectivo {
         public marca : string,
         public modelo : string,
         public activo : string,
-        public ubicacion : string,
+        public ubicacion : any,
         public recorridos : any[]) {
 
     }

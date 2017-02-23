@@ -1,3 +1,15 @@
 .selected{
     background-color: #888888;
 }
+
+#circulo {
+     width: 20px;
+     height: 20px;
+     -moz-border-radius: 50%;
+     -webkit-border-radius: 50%;
+     border-radius: 50%;
+}
+
+.map {
+    height: 400px;
+}

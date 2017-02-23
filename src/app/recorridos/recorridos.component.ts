@@ -1,3 +1,4 @@
+import { Colectivo } from './../shared/models/colectivo';
 import { Recorrido } from './../shared/models/recorrido';
 import { AfService } from './../af.service';
 import { Component, OnInit } from '@angular/core';
@@ -14,6 +15,8 @@ export class RecorridosComponent  {
 
   recorridos : Recorrido[];
 
+  colectivos : Colectivo[];
+
   poligonos: google.maps.Polygon[] = [];
 
   constructor(private afService: AfService) { 
@@ -25,6 +28,12 @@ export class RecorridosComponent  {
       .do(console.log)
       .subscribe(
         recorridos => recorridos = this.recorridos = recorridos
+      );
+    this.afService.findAllColectivos()
+      .do(console.log)
+      .subscribe(colectivos => {
+        colectivos = this.colectivos = colectivos;
+      }
       );
     console.log("listas obtenidas desde recorridos", this.recorridos);
   }
