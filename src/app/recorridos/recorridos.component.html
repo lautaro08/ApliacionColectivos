@@ -3,14 +3,10 @@ center= "Concepcion del uruguay, Argentina">
     <div *ngFor="let colectivo of colectivos">
       <marker *ngIf="colectivo.ubicacion != null" 
         [position]="colectivo.ubicacion">
-        <info-window id="iw">
-          id: {{colectivo.id}}, patente: {{colectivo.patente}}
-        </info-window>
       </marker>
     </div>
     <map-polygon *ngFor="let recorrido of recorridos; let i=index"
       id = "poligono_{{i}}"
-      [style.display]="inline"
       [strokeColor]="recorrido.color"
       [strokeOpacity]="0.8"
       [strokeWeight]="5"
@@ -18,10 +14,6 @@ center= "Concepcion del uruguay, Argentina">
       (initialized$)="onPolygonInit($event, recorrido, index)" 
       (click) = "mouseOverPolygon(i)"
       >
-
-      <info-window id="recorrido.nombre">
-        {{recorrido.nombre}}
-      </info-window>
      </map-polygon>
 
 </ng2-map>

@@ -9,22 +9,25 @@
       Menu de mierda
       <md-list>
         <md-list-item> 
-          <button md-button
-            (click)="router.navigate(['/recorridos'])">
-            <md-icon>directions_bus</md-icon> Home 
-          </button>
+          <a routerLink="/recorridos" routerLinkActive="active">
+            <button md-button>        
+              <md-icon>directions_bus</md-icon> Home 
+            </button>
+          </a>     
         </md-list-item>
         <md-list-item> 
-          <button md-button
-            (click)="router.navigate(['/comollegar'])">
-            <md-icon>my_location</md-icon> Como llegar?
-          </button>
+          <a routerLink="/comollegar" routerLinkActive="active">
+            <button md-button>
+              <md-icon>my_location</md-icon> Como llegar?
+            </button>
+          </a>
         </md-list-item>
         <md-list-item>
-          <button md-button
-            (click)="router.navigate(['/admin'])">
-            <md-icon>vpn_key</md-icon> Administrador
-          </button>  
+          <a routerLink="/admin" routerLinkActive="active">
+            <button md-button>
+              <md-icon>vpn_key</md-icon> Administrador
+            </button>  
+          </a>
         </md-list-item>
         
       </md-list>

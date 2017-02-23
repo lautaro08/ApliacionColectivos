@@ -1,3 +1,10 @@
 .app-content {
     min-height: 300px;
 }
+.a {
+    color: #000000;
+}
+.active {
+  color: #FFFFFF;
+  background-color: #888888; 
+}
