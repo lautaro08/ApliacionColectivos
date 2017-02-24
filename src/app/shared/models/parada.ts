@@ -3,7 +3,7 @@ export class Parada {
 
     constructor(
         public $key:string,
-        public ubicacion: string,
+        public pos: string,
         public recorrido: any[]) {
 
     }
@@ -12,10 +12,10 @@ export class Parada {
         return array.map(Parada.fromJson);
     }
 
-    static fromJson({$key, ubicacion, recorrido}): Parada {
+    static fromJson({$key, pos, recorrido}): Parada {
         return new Parada(
             $key,
-            ubicacion,
+            pos,
             recorrido
         );
     }

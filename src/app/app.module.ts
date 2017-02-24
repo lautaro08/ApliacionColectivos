@@ -20,6 +20,7 @@ import { RecorridoFormComponent } from './recorrido-form/recorrido-form.componen
 import { RecorridosComponent } from './recorridos/recorridos.component';
 import { ColectivoFormComponent } from './colectivo-form/colectivo-form.component';
 import { ConfirmDialog } from './shared/services/confirm-dialog/confirm-dialog.component';
+import { AdminParadasComponent } from './admin-paradas/admin-paradas.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ConfirmDialog } from './shared/services/confirm-dialog/confirm-dialog.c
     RecorridoFormComponent,
     RecorridosComponent,
     ColectivoFormComponent,
-    ConfirmDialog
+    ConfirmDialog,
+    AdminParadasComponent
   ],
   imports: [
     BrowserModule,

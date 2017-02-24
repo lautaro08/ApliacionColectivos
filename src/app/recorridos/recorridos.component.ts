@@ -75,9 +75,12 @@ export class RecorridosComponent  {
     }
   }
 
-  aVerQueHay(){
-    console.log("listas obtenidas desde recorridos", this.recorridos);
-    console.log("lista de poligonos", this.poligonos);
+  markerClicked(event, colectivo: Colectivo) {
+    var marcador = event.target;
+    marcador.ng2MapComponent.openInfoWindow("iw", marcador, {
+        id: colectivo.id,
+        patente: colectivo.patente
+    })
   }
 
 }

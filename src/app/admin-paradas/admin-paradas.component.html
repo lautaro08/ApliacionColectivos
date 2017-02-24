@@ -1,0 +1,34 @@
+<h1>Editor de paradas</h1>
+
+<ng2-map  *ngIf="recorridos != null" 
+center= "Concepcion del uruguay, Argentina"
+(click)="agregarParada($event)">
+
+    <marker *ngFor="let parada of paradas"
+      (click)="markerClicked($event, parada)"
+      [position]="parada.pos"
+      [draggable]="true">
+    </marker>
+
+    <info-window id="iw">
+      <div class="contenidoInfo">
+        <button class="boton_eliminar" md-raised-button 
+          (click)="removeParada([[parada]])">
+          <md-icon>delete</md-icon> Eliminar parada
+        </button>
+      </div>
+    </info-window>
+    
+    <map-polygon *ngFor="let recorrido of recorridos; let i=index"
+      id = "poligono_{{i}}"
+      [clickable]="false"
+      [strokeColor]="recorrido.color"
+      [strokeOpacity]="0.3"
+      [strokeWeight]="3"
+      [fillOpacity]="0"
+      (initialized$)="onPolygonInit($event, recorrido, index)" 
+      >
+     </map-polygon>
+
+</ng2-map>
+
