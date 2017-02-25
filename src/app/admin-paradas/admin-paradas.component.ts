@@ -1,7 +1,11 @@
+import { Ng2MapComponent } from 'ng2-map';
 import { Parada } from './../shared/models/parada';
 import { AfService } from './../af.service';
 import { Recorrido } from './../shared/models/recorrido';
 import { Component, OnInit } from '@angular/core';
+
+Ng2MapComponent['apiUrl'] =
+  'https://maps.google.com/maps/api/js?key=AIzaSyDZPEwiIvxgr2rmEwuRdtP_k5OyyVYjHIU&libraries=geometry';
 
 @Component({
   selector: 'admin-paradas',
@@ -12,6 +16,10 @@ import { Component, OnInit } from '@angular/core';
 export class AdminParadasComponent implements OnInit {
 
   paradas : Parada[] = [];
+
+  paradaSeleccionada : Parada;
+
+  marcadorSeleccionado : google.maps.Marker;
   
   recorridos : Recorrido[] = [];
 
@@ -24,6 +32,11 @@ export class AdminParadasComponent implements OnInit {
       .do(console.log)
       .subscribe(
         recorridos => recorridos = this.recorridos = recorridos
+      );
+    this.afService.findAllParadas()
+      .do(console.log)
+      .subscribe(
+        paradas => paradas = this.paradas = paradas
       );
   }
 
@@ -39,22 +52,63 @@ export class AdminParadasComponent implements OnInit {
   }
 
   agregarParada($event){
-    console.log('posicion parada: ', $event.latLng);
-    this.paradas.push(new Parada('', $event.latLng, []));
+    if($event.latLng != null){
+      console.log('posicion parada: ', $event.latLng);
+      var parada = new Parada('', $event.latLng, []);
+      this.recorridos.forEach((rec, index) =>{
+        if(google.maps.geometry.poly.isLocationOnEdge($event.latLng, this.poligonos[index],0.00012)){
+          console.log('esta en la ruta del ',rec.nombre);
+          parada.recorridos.push(rec.nombre);
+        }
+      });  
+      this.paradas.push(parada);
+    }
+  }
+
+  markerDragged($event, parada : Parada) {
+    if($event.latLng != null){
+      var marcador : google.maps.Marker = $event.target;
+      this.recorridos.forEach((rec, index) =>{
+        if(google.maps.geometry.poly.isLocationOnEdge($event.latLng, this.poligonos[index],0.00015)){
+          console.log('esta en la ruta del ',rec.nombre);
+          parada.recorridos.push(rec.nombre);
+        }
+      }); 
+    }
   }
 
   markerClicked(event, parada : Parada) {
-    var marcador = event.target;
-    marcador.ng2MapComponent.openInfoWindow("iw", marcador, {
-        parada: parada
-    })
+    var marcador : google.maps.Marker = event.target;
+    if(this.paradaSeleccionada === parada){
+      this.paradaSeleccionada = null;
+      marcador.setAnimation(null);
+    }else{
+      this.paradaSeleccionada = parada;
+      if(this.marcadorSeleccionado != null){
+        this.marcadorSeleccionado.setAnimation(null);
+      }   
+      marcador.setAnimation(google.maps.Animation.BOUNCE);
+      this.marcadorSeleccionado = marcador;
+    } 
   }
 
   removeParada(parada){
-    var index = this.paradas.indexOf(parada);
-    console.log("parada:", parada);
-    console.log("index de la parada", index);
-    delete this.paradas[index];
+    console.log('paradas antes de eliminar: ', this.paradas);
+    this.paradas = this.paradas.filter(par => par.pos != parada.pos);
+    console.log('paaradas despues de eliminar: ', this.paradas);
+  }
+
+  guardarParadas(){
+    console.log(this.paradas);
+    this.paradas.forEach(parada =>{
+      if(parada.recorridos === undefined){
+        parada.recorridos = [];
+      }
+      if(parada.pos.constructor === google.maps.LatLng){
+        parada.pos = parada.pos.toJSON();
+      }
+    });
+    this.afService.saveParadas(this.paradas);
   }
 
 }

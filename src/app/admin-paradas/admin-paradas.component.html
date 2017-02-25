@@ -6,18 +6,11 @@ center= "Concepcion del uruguay, Argentina"
 
     <marker *ngFor="let parada of paradas"
       (click)="markerClicked($event, parada)"
+      (dragstart)="parada.recorridos = []"
+      (dragend)="markerDragged($event, parada)"
       [position]="parada.pos"
       [draggable]="true">
     </marker>
-
-    <info-window id="iw">
-      <div class="contenidoInfo">
-        <button class="boton_eliminar" md-raised-button 
-          (click)="removeParada([[parada]])">
-          <md-icon>delete</md-icon> Eliminar parada
-        </button>
-      </div>
-    </info-window>
     
     <map-polygon *ngFor="let recorrido of recorridos; let i=index"
       id = "poligono_{{i}}"
@@ -32,3 +25,16 @@ center= "Concepcion del uruguay, Argentina"
 
 </ng2-map>
 
+<div *ngIf="paradaSeleccionada != null">
+  <md-list>
+    <md-list-item *ngFor="let recorrido of paradaSeleccionada.recorridos">{{recorrido}}</md-list-item>
+  </md-list>
+  <span>{{paradaSeleccionada.pos}}</span>
+  <button class="boton_eliminar" md-raised-button 
+    (click)="removeParada(paradaSeleccionada)"><md-icon>delete</md-icon> Eliminar parada
+  </button>
+</div>
+
+<button class="boton_guardar" md-raised-button 
+    (click)="guardarParadas()"><md-icon>save</md-icon> guardar paradas
+  </button>

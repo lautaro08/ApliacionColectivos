@@ -60,6 +60,15 @@ export class AfService {
       .catch(err => console.log(err, 'Error al eliminar el recorrido de firebase'));
   }
 
+  saveParadas(paradas) {
+      var dbParadas = this.afDb.list('/paradas');
+      dbParadas.remove();
+      paradas.forEach(parada =>{
+          delete parada.$key;
+          dbParadas.push(parada)
+      });
+  }
+
   createNewColectivo(colectivo:any) {
       var db = this.afDb;
       var colectivoRef = db.list('/colectivos').push();
