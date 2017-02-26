@@ -21,11 +21,12 @@
 <md-list>
   <md-list-item>
     <span> Origen </span>
-    <input places-auto-complete
+    <input places-auto-complete #autocompleteOrigen
+    (initialized$)="initialized($event)"
     placeholder="Introduce tu ubicacion"
     [style.width.px]="300"
-    (initialized$)="acInitialized($event)"
-    (place_changed)="placeChanged()" />
+    onreadystatechange="acInitialized($event)" 
+    (place_changed)="placeChanged()" >
     <button md-button (click)="myLocation(1)"><md-icon>my_location</md-icon></button>
     <button md-button (click)="optionChange(1)"><md-icon>place</md-icon></button>
   </md-list-item>

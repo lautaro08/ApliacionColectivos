@@ -33,7 +33,7 @@ export class MapComponent implements OnInit {
     console.log('mapa referenciado: ',this.mapa);
   }
 
-  acInitialized(autocompleteRef: any) {
+  initialized(autocompleteRef: any) {
     var concepcion = new google.maps.LatLngBounds(
     new google.maps.LatLng(-32.500228, -58.291129),
     new google.maps.LatLng(-32.456604, -58.217851));
@@ -45,11 +45,17 @@ export class MapComponent implements OnInit {
     };
 
     this.autocomplete = new google.maps.places.Autocomplete(autocompleteRef, options);
+    console.log('autocomplete referenciado: ', this.autocomplete);
   }
 
   placeChanged(place: google.maps.places.PlaceResult) {
     this.ref.detectChanges();
-    this.ubicacion = this.autocomplete.getPlace().geometry.location;
+    var place = this.autocomplete.getPlace();
+    if (!place.geometry) {
+      window.alert("Autocomplete's returned place contains no geometry");
+      return;
+    }
+    this.ubicacion = place.geometry.location.toJSON();
   }
 
   optionChange(op: number){
