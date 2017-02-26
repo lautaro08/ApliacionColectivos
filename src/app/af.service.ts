@@ -65,6 +65,7 @@ export class AfService {
       dbParadas.remove();
       paradas.forEach(parada =>{
           delete parada.$key;
+          if(parada.recorridos === undefined){parada.recorridos = []}
           dbParadas.push(parada)
       });
   }

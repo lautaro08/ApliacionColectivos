@@ -27,9 +27,8 @@ center= "Concepcion del uruguay, Argentina"
 
 <div *ngIf="paradaSeleccionada != null">
   <md-list>
-    <md-list-item *ngFor="let recorrido of paradaSeleccionada.recorridos">{{recorrido}}</md-list-item>
+    <md-list-item *ngFor="let recorrido of paradaSeleccionada.recorridos">{{this.getNameByKey(recorrido)}}</md-list-item>
   </md-list>
-  <span>{{paradaSeleccionada.pos}}</span>
   <button class="boton_eliminar" md-raised-button 
     (click)="removeParada(paradaSeleccionada)"><md-icon>delete</md-icon> Eliminar parada
   </button>

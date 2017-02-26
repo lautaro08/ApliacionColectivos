@@ -53,12 +53,13 @@ export class AdminParadasComponent implements OnInit {
 
   agregarParada($event){
     if($event.latLng != null){
-      console.log('posicion parada: ', $event.latLng);
-      var parada = new Parada('', $event.latLng, []);
+      console.log('posicion parada inicial: ', $event.latLng.toJSON());
+      var parada = new Parada('', $event.latLng.toJSON(), []);
+      console.log('recorridos a ver que tienen: ', this.recorridos);
       this.recorridos.forEach((rec, index) =>{
         if(google.maps.geometry.poly.isLocationOnEdge($event.latLng, this.poligonos[index],0.00012)){
           console.log('esta en la ruta del ',rec.nombre);
-          parada.recorridos.push(rec.nombre);
+          parada.recorridos.push(rec.$key);
         }
       });  
       this.paradas.push(parada);
@@ -67,11 +68,14 @@ export class AdminParadasComponent implements OnInit {
 
   markerDragged($event, parada : Parada) {
     if($event.latLng != null){
+      
       var marcador : google.maps.Marker = $event.target;
+      parada.pos = marcador.getPosition().toJSON();
+      console.log('nueva ubicacion: ', parada.pos);
       this.recorridos.forEach((rec, index) =>{
         if(google.maps.geometry.poly.isLocationOnEdge($event.latLng, this.poligonos[index],0.00015)){
           console.log('esta en la ruta del ',rec.nombre);
-          parada.recorridos.push(rec.nombre);
+          parada.recorridos.push(rec.$key);
         }
       }); 
     }
@@ -100,15 +104,17 @@ export class AdminParadasComponent implements OnInit {
 
   guardarParadas(){
     console.log(this.paradas);
-    this.paradas.forEach(parada =>{
-      if(parada.recorridos === undefined){
-        parada.recorridos = [];
-      }
-      if(parada.pos.constructor === google.maps.LatLng){
-        parada.pos = parada.pos.toJSON();
-      }
-    });
     this.afService.saveParadas(this.paradas);
+  }
+
+  //Esto se podria cambiar mapiando los recorridos desde firebase
+  //a algo asi como una hashtable -> digo yo, anda a saber
+  getNameByKey(key) : string {
+    var busqueda =this.recorridos.find(rec => rec.$key === key);
+    if(busqueda != undefined){
+      return busqueda.nombre; 
+    }
+    return "No pasa ningun recorrido por esta parada";
   }
 
 }
