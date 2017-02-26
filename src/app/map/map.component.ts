@@ -12,7 +12,7 @@ Ng2MapComponent['apiUrl'] =
 
 export class MapComponent implements OnInit {
 
-  evento :string = "nada";
+  mapa : google.maps.Map;
 
   autocomplete: google.maps.places.Autocomplete;
 
@@ -28,6 +28,11 @@ export class MapComponent implements OnInit {
   ngOnInit() {
   }
 
+  onMapReady(map){
+    this.mapa = map;
+    console.log('mapa referenciado: ',this.mapa);
+  }
+
   acInitialized(autocompleteRef: any) {
     var concepcion = new google.maps.LatLngBounds(
     new google.maps.LatLng(-32.500228, -58.291129),
@@ -40,30 +45,57 @@ export class MapComponent implements OnInit {
     };
 
     this.autocomplete = new google.maps.places.Autocomplete(autocompleteRef, options);
-    this.evento = "inicializado";
   }
 
   placeChanged(place: google.maps.places.PlaceResult) {
     this.ref.detectChanges();
-    this.evento = "place changed";
     this.ubicacion = this.autocomplete.getPlace().geometry.location;
   }
 
   optionChange(op: number){
     this.option = op;
     console.log("opcion " + this.option + "seleccionada");
-  }
-
-  mapClicked($event:any){
-    console.log('Map Clicked ');
     switch(this.option){
       case 1: 
-        this.ubicacion = $event.latLng;
+        this.ubicacion = this.mapa.getCenter();
         break;
       case 2:
-        this.destino = $event.latLng;
+        this.destino = this.mapa.getCenter();
         break;
     }
+  }
+
+  myLocation(option){
+    //Averiguar porque dentro de nua funcion de callback no se pueden referenciar
+    //variables con this.
+    var th = this;
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        th.mapa.setCenter(pos);
+        switch(option){
+          case 1: 
+            th.ubicacion = pos;
+            break;
+          case 2:
+            th.destino = pos;
+            break;
+        }
+      }, function() {
+        this.handleLocationError(true, th.mapa.getCenter());
+      });
+    } else {
+      // Browser doesn't support Geolocation
+      this.handleLocationError(false, th.mapa.getCenter());
+    }
+  }
+
+  handleLocationError(browserHasGeolocation, pos) {
+
   }
 
 }

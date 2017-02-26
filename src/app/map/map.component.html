@@ -1,4 +1,7 @@
-<ng2-map center="Concepcion del uruguay, Argentina" (mapClick)="mapClicked($event)" class="map">
+<ng2-map center="Concepcion del uruguay, Argentina" 
+  (mapClick)="mapClicked($event)"
+  (mapReady$)="onMapReady($event)"
+  class="map">
   
   <marker 
   *ngIf="ubicacion != null"
@@ -23,13 +26,13 @@
     [style.width.px]="300"
     (initialized$)="acInitialized($event)"
     (place_changed)="placeChanged()" />
-    <button md-button><md-icon>my_location</md-icon></button>
+    <button md-button (click)="myLocation(1)"><md-icon>my_location</md-icon></button>
     <button md-button (click)="optionChange(1)"><md-icon>place</md-icon></button>
   </md-list-item>
   <md-list-item>
     <span> Destino </span>
     <input>
-    <button md-button><md-icon>my_location</md-icon></button>
+    <button md-button (click)="myLocation(2)"><md-icon>my_location</md-icon></button>
     <button md-button (click)="optionChange(2)"><md-icon>place</md-icon></button>
   </md-list-item>  
 </md-list>
