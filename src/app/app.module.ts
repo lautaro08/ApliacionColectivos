@@ -4,13 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { AdminComponent } from './admin/admin.component';
-
-import { AgmCoreModule } from 'angular2-google-maps/core';
-
 import { MaterialModule } from '@angular/material';
 import { RouterModule, Routes } from '@angular/router';
 import { routeConfig } from './config/routing-config';
@@ -21,6 +17,7 @@ import { RecorridosComponent } from './recorridos/recorridos.component';
 import { ColectivoFormComponent } from './colectivo-form/colectivo-form.component';
 import { ConfirmDialog } from './shared/services/confirm-dialog/confirm-dialog.component';
 import { AdminParadasComponent } from './admin-paradas/admin-paradas.component';
+import { InicioComponent } from './inicio/inicio.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +28,8 @@ import { AdminParadasComponent } from './admin-paradas/admin-paradas.component';
     RecorridosComponent,
     ColectivoFormComponent,
     ConfirmDialog,
-    AdminParadasComponent
+    AdminParadasComponent,
+    InicioComponent
   ],
   imports: [
     BrowserModule,

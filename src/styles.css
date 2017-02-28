@@ -1,6 +1,81 @@
-/* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
+@import url(~@angular/material/core/theming/prebuilt/deeppurple-amber.css);
+@import url(../node_modules/bootstrap/dist/css/bootstrap.min.css);
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+html {
+  font-size: 15px; }
 
-.map {
-    height: 350px;
-}
+body {
+  width: 100%;
+  font-family: 'Open Sans', sans-serif;
+  color: #111111; }
+
+.encabezado {
+  background: #111111;
+  color: white;
+  padding: .5rem 0; }
+
+.encabezado .container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between; }
+
+.encabezado .logo img {
+  height: 40px;
+  width: auto; }
+
+#menu-principal {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 100%;
+      -ms-flex: 1 1 100%;
+          flex: 1 1 100%; }
+
+#menu-principal ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0 0; }
+
+#menu-principal ul a {
+  display: block;
+  padding: .5rem 0;
+  text-decoration: none;
+  text-align: center;
+  color: #fff;
+  text-transform: uppercase;
+  border-top: 1px solid grey; }
+
+#menu-principal ul a:hover,
+#menu-principal ul li .active {
+  color: #2196F3; }
+
+/*Estilo para el icono del boton menu*/
+.boton-menu {
+  border: 0;
+  background: transparent;
+  font-size: 1.5rem;
+  margin: 0 .5rem;
+  color: #fff; }
+
+.boton-menu:focus {
+  outline: 0; }
+
+.texto-encabezado {
+  text-align: center; }
+
+.btn-primary {
+  color: #fff;
+  background-color: #2196F3;
+  border-color: transparent; }
+
+/*# sourceMappingURL=styles.css.map */

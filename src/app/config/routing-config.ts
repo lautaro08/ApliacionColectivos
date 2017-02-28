@@ -1,3 +1,4 @@
+import { InicioComponent } from './../inicio/inicio.component';
 import { ColectivoFormComponent } from './../colectivo-form/colectivo-form.component';
 import { RecorridoFormComponent } from './../recorrido-form/recorrido-form.component';
 import { RecorridosComponent } from './../recorridos/recorridos.component';
@@ -18,8 +19,8 @@ const fallbackRoute : Route = {
 
 export const routeConfig : Routes = [
     {
-        path: 'home',
-        component: RecorridosComponent
+        path: 'inicio',
+        component: InicioComponent
     },
     {
         path: 'comollegar',

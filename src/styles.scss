@@ -1,0 +1,99 @@
+@import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+//--------------------------------
+//  FUENTE DE GOOGLE
+//--------------------------------
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+//--------------------------------
+//  PATRON DE COLORES
+//--------------------------------
+
+$principal:#2196F3;
+$principal_obscuro:#0D47A1;
+$secundario:#43A047;
+$acento:#F44336;
+
+$texto: #111111;
+
+html{
+    font-size: 15px;
+}
+body{
+    width: 100%;
+    font-family: 'Open Sans', sans-serif;
+    color: $texto;
+}
+
+//--------------------------------
+//  ESTILOS PARA EL HEADER
+//--------------------------------
+
+.encabezado{
+    background: $texto;
+    color: white;
+    padding: .5rem 0;
+}
+.encabezado .container{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.encabezado .logo img{
+    height: 40px;
+    width: auto;    
+}
+
+#menu-principal{
+    flex: 1 1 100%;
+}
+
+#menu-principal ul{
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0 0;
+}
+
+#menu-principal ul a{
+    display: block;
+    padding: .5rem 0;
+    text-decoration: none;
+    text-align: center;
+    color: #fff;
+    text-transform: uppercase;
+    border-top: 1px solid grey;
+}
+
+#menu-principal ul a:hover,
+#menu-principal ul li .active{
+    color: $principal;
+}
+
+/*Estilo para el icono del boton menu*/
+.boton-menu{
+    border: 0;
+    background: transparent;
+    font-size: 1.5rem;
+    margin: 0 .5rem;
+    color: #fff;
+}
+.boton-menu:focus{
+    outline: 0;
+}
+
+//--------------------------------
+//  ESTILOS PARA EL INICIO
+//--------------------------------
+
+.texto-encabezado{
+    text-align: center;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: $principal;
+    border-color: transparent;
+}
