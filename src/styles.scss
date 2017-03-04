@@ -18,23 +18,59 @@ $acento:#F44336;
 
 $texto: #111111;
 
+$heightencabezado: 60px;
+
+//--------------------------------
+//  FUENTES
+//--------------------------------
+
 html{
     font-size: 15px;
 }
 body{
-    width: 100%;
     font-family: 'Open Sans', sans-serif;
     color: $texto;
 }
 
 //--------------------------------
-//  ESTILOS PARA EL HEADER
+//  ESTILOS PARA LOS COMPONENTES
+//--------------------------------
+
+//contenedor de todo lo que se ve en la aplicacion
+app-root{
+    //para que la aplicacion ocupe todo el alto del navegador
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/*--------------------------------
+  !!!!!IMPORTANTE!!!!!
+Aca hay que agregar todos los bloques anidados incluyendo los
+selectores que agrega angular, asi la app sigue ocupando toda la
+pantalla y no obliga al usuario a hacer scroll
+--------------------------------*/
+.contenido{
+    flex: 1;
+    display: flex;
+}
+app-inicio{
+    width: 100%;
+    background: $principal_obscuro;
+}
+app-recorridos{
+    width: 100%;
+    background: $principal_obscuro;
+}
+//--------------------------------
+//  ESTILOS PARA EL TOOLBAR PRINCIPAL (header)
 //--------------------------------
 
 .encabezado{
     background: $texto;
     color: white;
     padding: .5rem 0;
+    flex: 0 1 0px;
 }
 .encabezado .container{
     display: flex;
@@ -52,18 +88,19 @@ body{
 }
 
 #menu-principal ul{
+    flex: 1 1 100%;
     list-style: none;
+    margin: .5rem 0 0 0;
     padding: 0;
-    margin: 1rem 0 0 0;
 }
 
 #menu-principal ul a{
     display: block;
-    padding: .5rem 0;
     text-decoration: none;
     text-align: center;
-    color: #fff;
     text-transform: uppercase;
+    color: #fff;
+    padding: .5rem;
     border-top: 1px solid grey;
 }
 
@@ -72,28 +109,155 @@ body{
     color: $principal;
 }
 
-/*Estilo para el icono del boton menu*/
-.boton-menu{
-    border: 0;
+/*Estilos para el boton del menu*/
+
+.boton-menu {
     background: transparent;
-    font-size: 1.5rem;
-    margin: 0 .5rem;
     color: #fff;
+    border: none;
+    font-size: 2rem;
+    margin: 0;
+    padding: 0;
 }
-.boton-menu:focus{
+
+.boton-menu:focus {
     outline: 0;
 }
 
 //--------------------------------
-//  ESTILOS PARA EL INICIO
+//  ESTILOS PARA LA BIENVENIDA
 //--------------------------------
 
-.texto-encabezado{
-    text-align: center;
+.bienvenida{
+    background: url("./assets/images/concepcion-panoramica-movil.jpg") no-repeat center center;
+    color: #fff;
+    height: calc(100vh - #{$heightencabezado});
 }
 
-.btn-primary {
+.bienvenida .container{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bienvenida .display-4{
+    margin-top: 3rem;
+}
+
+.bienvenida a{
+    text-decoration: none;
+}
+
+.bienvenida p{
+    margin: 0;
+}
+
+/*boton flecha para abajo*/
+.flecha-bajar{
+    flex: 0 1 0;
+}
+.flecha-bajar a {
+    display: inline-block;
     color: #fff;
-    background-color: $principal;
+    font-size: 4rem;
+    animation: flecha-animada 2s ease-in-out infinite;
+}
+
+@keyframes flecha-animada{
+    from{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(6px);
+    }
+    to{
+        transform: translateY(0);
+    }
+}
+
+//--------------------------------
+//  ESTILOS PARA CUANDO LLEGA
+//--------------------------------
+.cuando-llega{
+    color: #fff;
+    background: $principal;
+    padding: 2rem 0;
+    height: 50vh;
+}
+
+.cuando-llega i{
+    color: #fff;
+    font-size: 5rem;
+    background: $acento;
+    border-radius: 50%;
+    padding: 2rem;
+    width: 5rem;
+    height: 5rem;
+    line-height: 0;
+}
+
+.cuando-llega .btn-primary{
+    background-color: $acento;
     border-color: transparent;
+    margin: 1.5rem auto;
+    transition: all .5s ease;
+}
+
+.cuando-llega .btn-primary:hover,
+.cuando-llega .btn-primary .active,
+.cuando-llega .btn-primary:focus{
+    background-color: $secundario;
+    border-color: transparent;
+}
+
+.cuando-llega ul{
+    list-style: none;
+    margin-top: 1rem;
+}
+
+@media (max-height: 450px) {
+    .cuando-llega{
+        height: 100vh;
+    }
+}
+
+//--------------------------------
+//  ESTILOS PARA COMO LLEGAR
+//--------------------------------
+.como-llegar{
+    padding: 2rem 0;
+    height: 50vh;
+}
+
+@media (max-height: 450px) {
+    .como-llegar{
+        height: 100vh;
+    }
+}
+
+//--------------------------------
+//  ESTILOS PARA EL PIE DE PAGINA
+//--------------------------------
+.pie-de-pagina{
+    background: $texto;
+    color: #fff;
+}
+
+//--------------------------------
+//  ESTILOS PARA EL SLECTOR RECORRIDOS
+//--------------------------------
+
+app-recorridos .mapa{
+    height: 100%;
+}
+
+app-recorridos ng2-map{
+    height: 100%;
+}
+
+.lista-recorridos .cerrar-lista{
+    background: yellow;
+    margin: $heightencabezado auto;
+
 }

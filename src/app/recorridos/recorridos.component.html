@@ -1,4 +1,23 @@
-<ng2-map  *ngIf="recorridos != null" class="map"
+
+
+  <div class="container-fluid">
+      <button class="cerrar-lista fixed-top"> <i class="fa fa-angle-down" aria-hidden="true"></i> </button>
+    <div class="row">
+      <div class="col-md-3">
+        <section class="lista-recorridos">
+        <div *ngIf="recorridos != null" class="recorridos">
+          <md-card  *ngFor = "let recorrido of recorridos; let i = index"
+          [class.selected]="i === ultimoSeleccionado" (click)="recorridoSelected(i)">        
+            <md-card-title>{{recorrido.nombre}} <div id="circulo" [style.background]="recorrido.color"></div></md-card-title>
+            <md-card-content class="badge">{{recorrido.descripcion}}</md-card-content>
+          </md-card>      
+        </div>
+        </section>
+      </div>
+
+      <div class="col-md-9">
+        <section class="mapa">
+        <ng2-map  *ngIf="recorridos != null" class="map"
 center= "Concepcion del uruguay, Argentina">
     <div *ngFor="let colectivo of colectivos">
       <marker *ngIf="colectivo.ubicacion != null" 
@@ -25,12 +44,8 @@ center= "Concepcion del uruguay, Argentina">
      </map-polygon>
 
 </ng2-map>
-
-<div *ngIf="recorridos != null" class="recorridos">
-  <md-card  *ngFor = "let recorrido of recorridos; let i = index"
-  [class.selected]="i === ultimoSeleccionado" (click)="recorridoSelected(i)">
-        
-        <md-card-title>{{recorrido.nombre}} <div id="circulo" [style.background]="recorrido.color"></div></md-card-title>
-        <md-card-content class="badge">{{recorrido.descripcion}}</md-card-content>
-  </md-card>
-</div>
+</section>
+      </div>
+    </div>
+    
+  </div>  
