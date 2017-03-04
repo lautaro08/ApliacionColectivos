@@ -1,33 +1,29 @@
 @import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-
 //--------------------------------
 //  FUENTE DE GOOGLE
 //--------------------------------
-
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
-
 //--------------------------------
 //  PATRON DE COLORES
 //--------------------------------
-
 $principal:#2196F3;
 $principal_obscuro:#0D47A1;
 $secundario:#43A047;
 $acento:#F44336;
-
 $texto: #111111;
-
 $heightencabezado: 60px;
-
 //--------------------------------
 //  FUENTES
 //--------------------------------
 
-html{
+/**/
+
+html {
     font-size: 15px;
 }
-body{
+
+body {
     font-family: 'Open Sans', sans-serif;
     color: $texto;
 }
@@ -35,14 +31,14 @@ body{
 //--------------------------------
 //  ESTILOS PARA LOS COMPONENTES
 //--------------------------------
-
 //contenedor de todo lo que se ve en la aplicacion
-app-root{
+app-root {
     //para que la aplicacion ocupe todo el alto del navegador
     height: 100vh;
     display: flex;
     flex-direction: column;
 }
+
 
 /*--------------------------------
   !!!!!IMPORTANTE!!!!!
@@ -50,51 +46,56 @@ Aca hay que agregar todos los bloques anidados incluyendo los
 selectores que agrega angular, asi la app sigue ocupando toda la
 pantalla y no obliga al usuario a hacer scroll
 --------------------------------*/
-.contenido{
+
+.contenido {
     flex: 1;
     display: flex;
 }
-app-inicio{
+
+app-inicio {
     width: 100%;
     background: $principal_obscuro;
 }
-app-recorridos{
+
+app-recorridos {
     width: 100%;
     background: $principal_obscuro;
 }
+
 //--------------------------------
 //  ESTILOS PARA EL TOOLBAR PRINCIPAL (header)
 //--------------------------------
-
-.encabezado{
+.encabezado {
     background: $texto;
     color: white;
     padding: .5rem 0;
     flex: 0 1 0px;
 }
-.encabezado .container{
+
+.encabezado .container {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-between;
 }
-.encabezado .logo img{
+
+.encabezado .logo img {
     height: 40px;
-    width: auto;    
+    width: auto;
 }
 
-#menu-principal{
+#menu-principal {
     flex: 1 1 100%;
 }
 
-#menu-principal ul{
+#menu-principal ul {
     flex: 1 1 100%;
     list-style: none;
     margin: .5rem 0 0 0;
     padding: 0;
 }
 
-#menu-principal ul a{
+#menu-principal ul a {
     display: block;
     text-decoration: none;
     text-align: center;
@@ -104,10 +105,10 @@ app-recorridos{
     border-top: 1px solid grey;
 }
 
-#menu-principal ul a:hover,
-#menu-principal ul li .active{
+#menu-principal ul a:hover, #menu-principal ul li .active {
     color: $principal;
 }
+
 
 /*Estilos para el boton del menu*/
 
@@ -127,36 +128,38 @@ app-recorridos{
 //--------------------------------
 //  ESTILOS PARA LA BIENVENIDA
 //--------------------------------
-
-.bienvenida{
+.bienvenida {
     background: url("./assets/images/concepcion-panoramica-movil.jpg") no-repeat center center;
     color: #fff;
     height: calc(100vh - #{$heightencabezado});
 }
 
-.bienvenida .container{
+.bienvenida .container {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.bienvenida .display-4{
+.bienvenida .display-4 {
     margin-top: 3rem;
 }
 
-.bienvenida a{
+.bienvenida a {
     text-decoration: none;
 }
 
-.bienvenida p{
+.bienvenida p {
     margin: 0;
 }
 
+
 /*boton flecha para abajo*/
-.flecha-bajar{
+
+.flecha-bajar {
     flex: 0 1 0;
 }
+
 .flecha-bajar a {
     display: inline-block;
     color: #fff;
@@ -164,14 +167,14 @@ app-recorridos{
     animation: flecha-animada 2s ease-in-out infinite;
 }
 
-@keyframes flecha-animada{
-    from{
+@keyframes flecha-animada {
+    from {
         transform: translateY(0);
     }
-    50%{
+    50% {
         transform: translateY(6px);
     }
-    to{
+    to {
         transform: translateY(0);
     }
 }
@@ -179,67 +182,99 @@ app-recorridos{
 //--------------------------------
 //  ESTILOS PARA CUANDO LLEGA
 //--------------------------------
-.cuando-llega{
+.cuando-llega {
     color: #fff;
     background: $principal;
     padding: 2rem 0;
-    height: 50vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-.cuando-llega i{
+.cuando-llega .container{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.cuando-llega i {
     color: #fff;
-    font-size: 5rem;
-    background: $acento;
+    font-size: 2rem;
+    background: $secundario;
     border-radius: 50%;
-    padding: 2rem;
-    width: 5rem;
-    height: 5rem;
-    line-height: 0;
+    padding: .5rem;
+    margin-right: .5rem;
 }
 
-.cuando-llega .btn-primary{
+.cuando-llega .titulo{
+    margin-bottom: 1rem;
+}
+
+.cuando-llega .tip{
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+    width: 100%;
+}
+
+.cuando-llega .btn-primary {
     background-color: $acento;
     border-color: transparent;
-    margin: 1.5rem auto;
+    margin: auto auto 1.5rem auto;
     transition: all .5s ease;
+    display: block;
 }
 
-.cuando-llega .btn-primary:hover,
-.cuando-llega .btn-primary .active,
-.cuando-llega .btn-primary:focus{
+.cuando-llega .btn-primary:hover, .cuando-llega .btn-primary .active, .cuando-llega .btn-primary:focus {
     background-color: $secundario;
     border-color: transparent;
-}
-
-.cuando-llega ul{
-    list-style: none;
-    margin-top: 1rem;
-}
-
-@media (max-height: 450px) {
-    .cuando-llega{
-        height: 100vh;
-    }
 }
 
 //--------------------------------
 //  ESTILOS PARA COMO LLEGAR
 //--------------------------------
-.como-llegar{
+.como-llegar {
     padding: 2rem 0;
-    height: 50vh;
+    height: 100vh;
 }
 
-@media (max-height: 450px) {
-    .como-llegar{
-        height: 100vh;
-    }
+.como-llegar .container{
+    height: 100%;
+  display: flex;
+  flex-direction: column;
 }
+
+
+.como-llegar .titulo{
+  margin-bottom: 1rem;
+}
+
+.como-llegar .texto-acentuado{
+    color: $principal;
+    font-size: 1.5rem;
+    display: block;
+}
+
+.como-llegar .btn-primary {
+  background-color: $acento;
+  border-color: transparent;
+  margin: auto auto 1.5rem auto;
+  transition: all .5s ease;
+  display: block;
+}
+
+.como-llegar .btn-primary:hover,
+.como-llegar .btn-primary .active,
+.como-llegar .btn-primary:focus {
+  background-color: $secundario;
+  border-color: transparent;
+}
+
 
 //--------------------------------
 //  ESTILOS PARA EL PIE DE PAGINA
 //--------------------------------
-.pie-de-pagina{
+.pie-de-pagina {
     background: $texto;
     color: #fff;
 }
@@ -247,17 +282,46 @@ app-recorridos{
 //--------------------------------
 //  ESTILOS PARA EL SLECTOR RECORRIDOS
 //--------------------------------
+app-recorridos{
+    overflow-y: hidden;
+}
 
-app-recorridos .mapa{
+app-recorridos .mapa,   
+app-recorridos .lista-recorridos{
+    height: calc(100vh - #{$heightencabezado});
+}
+
+app-recorridos .lista-recorridos{
+    overflow-y: scroll;
+}
+
+app-recorridos ng2-map {
     height: 100%;
 }
 
-app-recorridos ng2-map{
-    height: 100%;
+app-recorridos .card-block {
+  margin: .5rem;
 }
 
-.lista-recorridos .cerrar-lista{
-    background: yellow;
-    margin: $heightencabezado auto;
 
+app-recorridos .cerrar-lista {
+    position: fixed;
+    top: calc(#{$heightencabezado} + 1rem);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    background: $acento;
+    opacity: 0.3;
+    padding: 1rem;
+    color: #fff;
+    animation: flecha-animada 2s ease-in-out infinite;
+
+}
+
+app-recorridos .cerrar-lista:hover,
+app-recorridos .cerrar-lista .active,
+ app-recorridos .cerrar-lista:focus {
+  background-color: $secundario;
+  opacity: 1;
+  border-color: transparent;
 }

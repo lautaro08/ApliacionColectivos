@@ -1,6 +1,7 @@
 @import url(~@angular/material/core/theming/prebuilt/deeppurple-amber.css);
 @import url(../node_modules/bootstrap/dist/css/bootstrap.min.css);
 @import url("https://fonts.googleapis.com/css?family=Open+Sans");
+/**/
 html {
   font-size: 15px; }
 
@@ -65,8 +66,7 @@ app-recorridos {
   padding: .5rem;
   border-top: 1px solid grey; }
 
-#menu-principal ul a:hover,
-#menu-principal ul li .active {
+#menu-principal ul a:hover, #menu-principal ul li .active {
   color: #2196F3; }
 
 /*Estilos para el boton del menu*/
@@ -122,56 +122,110 @@ app-recorridos {
   color: #fff;
   background: #2196F3;
   padding: 2rem 0;
-  height: 50vh; }
+  height: 100vh;
+  display: flex;
+  flex-direction: column; }
+
+.cuando-llega .container {
+  height: 100%;
+  display: flex;
+  flex-direction: column; }
 
 .cuando-llega i {
   color: #fff;
-  font-size: 5rem;
-  background: #F44336;
+  font-size: 2rem;
+  background: #43A047;
   border-radius: 50%;
-  padding: 2rem;
-  width: 5rem;
-  height: 5rem;
-  line-height: 0; }
+  padding: .5rem;
+  margin-right: .5rem; }
+
+.cuando-llega .titulo {
+  margin-bottom: 1rem; }
+
+.cuando-llega .tip {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+  width: 100%; }
 
 .cuando-llega .btn-primary {
   background-color: #F44336;
   border-color: transparent;
-  margin: 1.5rem auto;
-  transition: all .5s ease; }
+  margin: auto auto 1.5rem auto;
+  transition: all .5s ease;
+  display: block; }
 
-.cuando-llega .btn-primary:hover,
-.cuando-llega .btn-primary .active,
-.cuando-llega .btn-primary:focus {
+.cuando-llega .btn-primary:hover, .cuando-llega .btn-primary .active, .cuando-llega .btn-primary:focus {
   background-color: #43A047;
   border-color: transparent; }
 
-.cuando-llega ul {
-  list-style: none;
-  margin-top: 1rem; }
-
-@media (max-height: 450px) {
-  .cuando-llega {
-    height: 100vh; } }
 .como-llegar {
   padding: 2rem 0;
-  height: 50vh; }
+  height: 100vh; }
 
-@media (max-height: 450px) {
-  .como-llegar {
-    height: 100vh; } }
+.como-llegar .container {
+  height: 100%;
+  display: flex;
+  flex-direction: column; }
+
+.como-llegar .titulo {
+  margin-bottom: 1rem; }
+
+.como-llegar .texto-acentuado {
+  color: #2196F3;
+  font-size: 1.5rem;
+  display: block; }
+
+.como-llegar .btn-primary {
+  background-color: #F44336;
+  border-color: transparent;
+  margin: auto auto 1.5rem auto;
+  transition: all .5s ease;
+  display: block; }
+
+.como-llegar .btn-primary:hover,
+.como-llegar .btn-primary .active,
+.como-llegar .btn-primary:focus {
+  background-color: #43A047;
+  border-color: transparent; }
+
 .pie-de-pagina {
   background: #111111;
   color: #fff; }
 
-app-recorridos .mapa {
-  height: 100%; }
+app-recorridos {
+  overflow-y: hidden; }
+
+app-recorridos .mapa,
+app-recorridos .lista-recorridos {
+  height: calc(100vh - 60px); }
+
+app-recorridos .lista-recorridos {
+  overflow-y: scroll; }
 
 app-recorridos ng2-map {
   height: 100%; }
 
-.lista-recorridos .cerrar-lista {
-  background: yellow;
-  margin: 60px auto; }
+app-recorridos .card-block {
+  margin: .5rem; }
+
+app-recorridos .cerrar-lista {
+  position: fixed;
+  top: calc(60px + 1rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  background: #F44336;
+  opacity: 0.3;
+  padding: 1rem;
+  color: #fff;
+  animation: flecha-animada 2s ease-in-out infinite; }
+
+app-recorridos .cerrar-lista:hover,
+app-recorridos .cerrar-lista .active,
+app-recorridos .cerrar-lista:focus {
+  background-color: #43A047;
+  opacity: 1;
+  border-color: transparent; }
 
 /*# sourceMappingURL=styles.css.map */

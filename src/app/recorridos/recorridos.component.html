@@ -1,51 +1,51 @@
-
-
-  <div class="container-fluid">
-      <button class="cerrar-lista fixed-top"> <i class="fa fa-angle-down" aria-hidden="true"></i> </button>
+<div class="container-fluid">
+    <button type="button" class="btn cerrar-lista rounded-circle" data-toggle="collapse" data-target="#listaRecorridos" 
+        aria-expanded="false" aria-controls="listaRecorridos">
+        <i aria-hidden="true" class="fa fa-angle-down">
+        </i>
+    </button>
     <div class="row">
-      <div class="col-md-3">
-        <section class="lista-recorridos">
-        <div *ngIf="recorridos != null" class="recorridos">
-          <md-card  *ngFor = "let recorrido of recorridos; let i = index"
-          [class.selected]="i === ultimoSeleccionado" (click)="recorridoSelected(i)">        
-            <md-card-title>{{recorrido.nombre}} <div id="circulo" [style.background]="recorrido.color"></div></md-card-title>
-            <md-card-content class="badge">{{recorrido.descripcion}}</md-card-content>
-          </md-card>      
+        <div class="col-md-3 p-0 collapse" id="listaRecorridos">
+            <section class="lista-recorridos">
+                <div *ngIf="recorridos != null" class="recorridos">
+                    <div *ngFor="let recorrido of recorridos; let i = index" class="card" 
+                    [class.selected]="i === ultimoSeleccionado"
+                    (click)="recorridoSelected(i)">
+                        <div class="card-block">
+                            <h4 class="card-title">{{recorrido.nombre}}</h4>
+                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                            <p class="card-text"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-        </section>
-      </div>
-
-      <div class="col-md-9">
-        <section class="mapa">
-        <ng2-map  *ngIf="recorridos != null" class="map"
-center= "Concepcion del uruguay, Argentina">
-    <div *ngFor="let colectivo of colectivos">
-      <marker *ngIf="colectivo.ubicacion != null" 
-        (click)="markerClicked($event, colectivo)"
-        [position]="colectivo.ubicacion">
-      </marker>
+        <div class="col-md-9 p-0">
+            <section class="mapa">
+                <ng2-map *ngIf="recorridos != null" center="Concepcion del uruguay, Argentina" class="map">
+                    <div *ngFor="let colectivo of colectivos">
+                        <marker (click)="markerClicked($event, colectivo)" *ngIf="colectivo.ubicacion != null" [position]="colectivo.ubicacion">
+                        </marker>
+                    </div>
+                    <info-window id="iw">
+                        <div class="contenidoInfo">
+                            <h1>
+                                Estoy re loco
+                            </h1>
+                            id [[id]], patente [[patente]]
+                        </div>
+                    </info-window>
+                    <map-polygon *ngFor="let recorrido of recorridos; let i=index"
+                    (click)="mouseOverPolygon(i)" 
+                    (initialized$)="onPolygonInit($event, recorrido, index)"  
+                    [fillOpacity]="0" 
+                    [strokeColor]="recorrido.color" 
+                    [strokeOpacity]="0.8" 
+                    [strokeWeight]="5" 
+                    id="poligono_{{i}}">
+                    </map-polygon>
+                </ng2-map>
+            </section>
+        </div>
     </div>
-    <info-window id="iw">
-      <div class="contenidoInfo"><h1>Estoy re loco</h1>
-      id [[id]], patente [[patente]]
-      </div>
-      
-    </info-window>
-    
-    <map-polygon *ngFor="let recorrido of recorridos; let i=index"
-      id = "poligono_{{i}}"
-      [strokeColor]="recorrido.color"
-      [strokeOpacity]="0.8"
-      [strokeWeight]="5"
-      [fillOpacity]="0"
-      (initialized$)="onPolygonInit($event, recorrido, index)" 
-      (click) = "mouseOverPolygon(i)"
-      >
-     </map-polygon>
-
-</ng2-map>
-</section>
-      </div>
-    </div>
-    
-  </div>  
+</div>
