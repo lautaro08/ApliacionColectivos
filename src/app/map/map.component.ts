@@ -23,6 +23,10 @@ export class MapComponent implements OnInit {
 
   paradas : any[] = [];
 
+  recorridos : any[] = [];
+
+  distancia : any = "distancia desconocidaaaaaaaa";
+
   //opcion 1: selecciona marcador de ubicacion
   //opcion 2: selecciona marcador de destino
   option : number = 1;
@@ -31,15 +35,20 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     this.afService.findAllParadas()
-      .do(console.log)
+      //.do()
       .subscribe(
         paradas => paradas = this.paradas = paradas
       );
+    this.afService.findAllRecorridos()
+      //.do(console.log)
+      .subscribe(
+          recorridos => recorridos = this.recorridos = recorridos
+        ); 
   }
 
   onMapReady(map){
     this.mapa = map;
-    console.log('mapa referenciado: ',this.mapa);
+    //console.log('mapa referenciado: ',this.mapa);
   }
 
   markerInitialized(marcador : google.maps.Marker){
@@ -65,7 +74,7 @@ export class MapComponent implements OnInit {
     };
 
     this.autocomplete = new google.maps.places.Autocomplete(autocompleteRef, options);
-    console.log('autocomplete referenciado: ', this.autocomplete);
+   // console.log('autocomplete referenciado: ', this.autocomplete);
   }
 
   placeChanged(place: google.maps.places.PlaceResult) {
@@ -120,6 +129,53 @@ export class MapComponent implements OnInit {
     }
   }
 
+  deg2rad(degrees){
+    var radians = degrees * (Math.PI/180);
+    return radians;
+  }
+
+  Haversine(lat1,lon1,lat2,lon2) {
+    var deltaLat = lat2 - lat1 ;
+    var deltaLon = lon2 - lon1 ;
+    var earthRadius =  6369087 ; // in meters 3959 in miles.
+    var alpha = deltaLat/2;
+    var beta     = deltaLon/2;
+    var a        = Math.sin(this.deg2rad(alpha)) * Math.sin(this.deg2rad(alpha)) + Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * Math.sin(this.deg2rad(beta)) * Math.sin(this.deg2rad(beta)) ;
+    var c        = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var distance =  earthRadius * c;
+    return distance.toFixed(2);
+  }
+
+  calcularDistancia(){
+    this.fuerzaBruta(this.paradas, this.ubicacion);
+  }
+
+  fuerzaBruta(paradas, ubicacion):any{
+    var masCercana: any[] = [null, parseInt(this.Haversine(paradas[0].pos.lat,
+                              paradas[0].pos.lng,
+                              ubicacion.lat(),
+                              ubicacion.lng()).valueOf())];
+      console.log(masCercana);
+    this.paradas.forEach(parada =>{
+      var distancia = parseInt(this.Haversine(parada.pos.lat,
+                              parada.pos.lng,
+                              ubicacion.lat(),
+                              ubicacion.lng()).valueOf());  
+      if(distancia <= masCercana[1]){
+        masCercana[0] = parada;
+        masCercana[1] = distancia; 
+      }
+    });
+    return  masCercana[0].pos;
+  }
+
+  actualizarUbicaciones(ubicacion, esLlegada){
+    if(esLlegada){
+      this.destino = this.fuerzaBruta(this.paradas,ubicacion.latLng);
+    }else{
+      this.ubicacion = this.fuerzaBruta(this.paradas,ubicacion.latLng);
+    }
+  }
   handleLocationError(browserHasGeolocation, pos) {
 
   }
