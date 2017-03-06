@@ -305,7 +305,7 @@ app-recorridos .card-block {
 
 
 app-recorridos .cerrar-lista {
-    position: fixed;
+             position: fixed;
     top: calc(#{$heightencabezado} + 1rem);
     left: 50%;
     transform: translateX(-50%);

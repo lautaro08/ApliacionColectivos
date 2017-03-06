@@ -22,7 +22,8 @@
         </div>
         <div class="col-md-9 p-0">
             <section class="mapa">
-                <ng2-map *ngIf="recorridos != null" center="Concepcion del uruguay, Argentina" class="map">
+                <ng2-map *ngIf="recorridos != null" center="Concepcion del uruguay, Argentina" 
+                    class="map" (mapReady$)="onMapReady($event)">
                     <div *ngFor="let colectivo of colectivos">
                         <marker (click)="markerClicked($event, colectivo)" *ngIf="colectivo.ubicacion != null" [position]="colectivo.ubicacion">
                         </marker>
