@@ -4,95 +4,95 @@ import {AfService }from './../af.service';
 import {Component, OnInit }from '@angular/core'; 
 
 @Component( {
-selector:'app-recorridos', 
-templateUrl:'./recorridos.component.html', 
-styleUrls:['./recorridos.component.css'], 
-providers:[AfService]
+        selector:'app-recorridos', 
+        templateUrl:'./recorridos.component.html', 
+        styleUrls:['./recorridos.component.css'], 
+        providers:[AfService]
 })
 export class RecorridosComponent {
 
-ultimoSeleccionado:number = -1; 
+        ultimoSeleccionado:number = -1; 
 
-recorridos:Recorrido[]; 
+        recorridos:Recorrido[]; 
 
-colectivos:Colectivo[]; 
+        colectivos:Colectivo[]; 
 
-poligonos:google.maps.Polygon[] = []; 
+        poligonos:google.maps.Polygon[] = []; 
 
-constructor(private afService:AfService) {
+        constructor(private afService:AfService) {
 
-}
+        }
 
-ngOnInit() {
-this.afService.findAllRecorridos()
-.do(console.log)
-.subscribe(
-recorridos => recorridos = this.recorridos = recorridos
-      ); 
-this.afService.findAllColectivos()
-.do(console.log)
-.subscribe(colectivos =>  {
-colectivos = this.colectivos = colectivos; 
-}
-); 
-console.log("listas obtenidas desde recorridos", this.recorridos); 
-}
+        ngOnInit() {
+                this.afService.findAllRecorridos()
+                .do(console.log)
+                .subscribe(
+                        recorridos => recorridos = this.recorridos = recorridos
+                ); 
+                this.afService.findAllColectivos()
+                        .do(console.log)
+                        .subscribe(colectivos =>  {
+                                colectivos = this.colectivos = colectivos; 
+                        }
+                        ); 
+                console.log("listas obtenidas desde recorridos", this.recorridos); 
+        }
 
-onMapReady(map:google.maps.Map) {
+        onMapReady(map:google.maps.Map) {
 
-var mapOptions =  {
-zoomControl:false, 
-mapTypeControl:false, 
-scaleControl:false, 
-streetViewControl:false, 
-rotateControl:false
-  }
-map.setOptions(mapOptions); 
-}
+                var mapOptions =  {
+                        zoomControl:false, 
+                        mapTypeControl:false, 
+                        scaleControl:false, 
+                        streetViewControl:false, 
+                        rotateControl:false
+                }
+                map.setOptions(mapOptions); 
+        }
 
-onPolygonInit(polygono, recorrido:Recorrido, index:number) {
-this.poligonos.push(polygono); 
-var path = []; 
-for (let key in recorrido.ruta) {
-console.log(recorrido.ruta[key]); 
-path.push(recorrido.ruta[key]); 
-}
-console.log(path); 
-polygono.setPaths(path); 
-}
+        onPolygonInit(polygono, recorrido:Recorrido, index:number) {
+                this.poligonos.push(polygono); 
+                var path = []; 
+                for (let key in recorrido.ruta) {
+                        console.log(recorrido.ruta[key]); 
+                        path.push(recorrido.ruta[key]); 
+                }
+                console.log(path); 
+                polygono.setPaths(path); 
+        }
 
-mouseOverPolygon(index:number) {
-var res = this.poligonos[index]; 
-console.log(index, res); 
-}
+        mouseOverPolygon(index:number) {
+                var res = this.poligonos[index]; 
+                console.log(index, res); 
+        }
 
-recorridoSelected(index:number) {
-this.poligonos.forEach((poligono, i) =>  {
-if (i != index && index != this.ultimoSeleccionado) {
-poligono.setOptions( {
-strokeColor:'#888888', 
-strokeOpacity:0.3
-        }); 
-}else {
-poligono.setOptions( {
-strokeColor:this.recorridos[i].color, 
-strokeOpacity:0.8
-        }); 
-}
-}); 
-if (index === this.ultimoSeleccionado) {
-this.ultimoSeleccionado = -1; 
-}else {
-this.ultimoSeleccionado = index; 
-}
-}
+        recorridoSelected(index:number) {
+                this.poligonos.forEach((poligono, i) =>  {
+                        if (i != index && index != this.ultimoSeleccionado) {
+                poligono.setOptions( {
+                strokeColor:'#888888', 
+                strokeOpacity:0.3
+                        }); 
+                }else {
+                poligono.setOptions( {
+                strokeColor:this.recorridos[i].color, 
+                strokeOpacity:0.8
+                        }); 
+                }
+                }); 
+                if (index === this.ultimoSeleccionado) {
+                this.ultimoSeleccionado = -1; 
+                }else {
+                this.ultimoSeleccionado = index; 
+                }
+        }
 
-markerClicked(event, colectivo:Colectivo) {
-var marcador = event.target; 
-marcador.ng2MapComponent.openInfoWindow("iw", marcador,  {
-id:colectivo.id, 
-patente:colectivo.patente
-    })
-}
+        markerClicked(event, colectivo:Colectivo) {
+                var marcador = event.target; 
+                marcador.ng2MapComponent.openInfoWindow("iw", marcador,  {
+                        id:colectivo.id, 
+                        patente:colectivo.patente
+                })
+        }
 
 }

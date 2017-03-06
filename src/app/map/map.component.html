@@ -1,39 +1,48 @@
-<ng2-map center="Concepcion del uruguay, Argentina" 
-  (mapClick)="mapClicked($event)"
-  (mapReady$)="onMapReady($event)"
-  class="map">
+<div class="container-fluid p-0"> 
+  <div class="formulario-posicion">
+    <div class="linea-formulario">
+      <span class="label"> Origen </span>
+      <input places-auto-complete #autocompleteOrigen
+      (onselect)="initialized($event)"
+      placeholder="Introduce tu ubicacion"
+      onreadystatechange="acInitialized($event)" 
+      (place_changed)="placeChanged()" >
+      <button md-button (click)="myLocation(1)"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+      <button md-button (click)="optionChange(1)"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+    </div>
+    <div class="linea-formulario">
+      <span class="label"> Destino </span>
+      <input>
+      <button md-button (click)="myLocation(2)"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+      <button md-button (click)="optionChange(2)"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+    </div>  
+  </div>
+
+  <ng2-map center="Concepcion del uruguay, Argentina" 
+    (mapClick)="mapClicked($event)"
+    (mapReady$)="onMapReady($event)"
+    class="mapa">
+    
+    <marker 
+    *ngIf="ubicacion != null"
+      [position]="ubicacion"
+      [draggable]="true"
+    >
+    </marker>
+
+    <marker 
+    *ngIf="destino != null"
+      [position] = "destino"
+      [draggable]="true"
+    >
+    </marker>
+
+    <marker *ngFor="let parada of paradas"
+      [position]="parada.pos"
+      (initialized$)="markerInitialized($event)"
+      >
+    </marker>
+  </ng2-map>
+
   
-  <marker 
-  *ngIf="ubicacion != null"
-    [position]="ubicacion"
-    [draggable]="true"
-  >
-  </marker>
-
-  <marker 
-  *ngIf="destino != null"
-    [position] = "destino"
-    [draggable]="true"
-  >
-  </marker>
-</ng2-map>
-
-<md-list>
-  <md-list-item>
-    <span> Origen </span>
-    <input places-auto-complete #autocompleteOrigen
-    (initialized$)="initialized($event)"
-    placeholder="Introduce tu ubicacion"
-    [style.width.px]="300"
-    onreadystatechange="acInitialized($event)" 
-    (place_changed)="placeChanged()" >
-    <button md-button (click)="myLocation(1)"><md-icon>my_location</md-icon></button>
-    <button md-button (click)="optionChange(1)"><md-icon>place</md-icon></button>
-  </md-list-item>
-  <md-list-item>
-    <span> Destino </span>
-    <input>
-    <button md-button (click)="myLocation(2)"><md-icon>my_location</md-icon></button>
-    <button md-button (click)="optionChange(2)"><md-icon>place</md-icon></button>
-  </md-list-item>  
-</md-list>
+</div>

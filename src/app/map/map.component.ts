@@ -1,3 +1,4 @@
+import { AfService } from './../af.service';
 import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { Ng2MapComponent } from 'ng2-map';
 
@@ -7,7 +8,8 @@ Ng2MapComponent['apiUrl'] =
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  styleUrls: ['./map.component.css'],
+  providers: [AfService]
 })
 
 export class MapComponent implements OnInit {
@@ -19,18 +21,36 @@ export class MapComponent implements OnInit {
   ubicacion : any;
   destino : any;
 
+  paradas : any[] = [];
+
   //opcion 1: selecciona marcador de ubicacion
   //opcion 2: selecciona marcador de destino
   option : number = 1;
 
-  constructor(private ref: ChangeDetectorRef) { }
+  constructor(private ref: ChangeDetectorRef, private afService: AfService) { }
 
   ngOnInit() {
+    this.afService.findAllParadas()
+      .do(console.log)
+      .subscribe(
+        paradas => paradas = this.paradas = paradas
+      );
   }
 
   onMapReady(map){
     this.mapa = map;
     console.log('mapa referenciado: ',this.mapa);
+  }
+
+  markerInitialized(marcador : google.maps.Marker){
+    var icon = {
+      url: "../assets/images/parada.png", // url
+      scaledSize: new google.maps.Size(20, 20), // scaled size
+      origin: new google.maps.Point(0,0), // origin
+      anchor: new google.maps.Point(0, 0) // anchor
+    };
+
+    marcador.setIcon(icon);
   }
 
   initialized(autocompleteRef: any) {

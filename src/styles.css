@@ -11,6 +11,7 @@ body {
 
 app-root {
   height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column; }
 
@@ -29,6 +30,10 @@ app-inicio {
   background: #0D47A1; }
 
 app-recorridos {
+  width: 100%;
+  background: #0D47A1; }
+
+app-map {
   width: 100%;
   background: #0D47A1; }
 
@@ -227,5 +232,13 @@ app-recorridos .cerrar-lista:focus {
   background-color: #43A047;
   opacity: 1;
   border-color: transparent; }
+
+app-map .container-fluid {
+  height: 100%;
+  display: flex;
+  flex-direction: column; }
+
+app-map .mapa {
+  flex: 1 1 0; }
 
 /*# sourceMappingURL=styles.css.map */

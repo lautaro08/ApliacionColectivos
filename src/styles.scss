@@ -35,6 +35,7 @@ body {
 app-root {
     //para que la aplicacion ocupe todo el alto del navegador
     height: 100vh;
+    width: 100vw;
     display: flex;
     flex-direction: column;
 }
@@ -62,6 +63,10 @@ app-recorridos {
     background: $principal_obscuro;
 }
 
+app-map {
+    width: 100%;
+    background: $principal_obscuro;
+}
 //--------------------------------
 //  ESTILOS PARA EL TOOLBAR PRINCIPAL (header)
 //--------------------------------
@@ -305,7 +310,7 @@ app-recorridos .card-block {
 
 
 app-recorridos .cerrar-lista {
-             position: fixed;
+    position: fixed;
     top: calc(#{$heightencabezado} + 1rem);
     left: 50%;
     transform: translateX(-50%);
@@ -324,4 +329,18 @@ app-recorridos .cerrar-lista .active,
   background-color: $secundario;
   opacity: 1;
   border-color: transparent;
+}
+
+//--------------------------------
+//  ESTILOS PARA EL SLECTOR MAPA
+//--------------------------------
+
+app-map .container-fluid{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+app-map .mapa{
+    flex: 1 1 0;
 }
