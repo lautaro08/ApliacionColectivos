@@ -19,10 +19,18 @@
   </div>
 
   <ng2-map center="Concepcion del uruguay, Argentina" 
-    (mapClick)="calcularDistancia()"
+    (mapClick)="paradasMasCercanas()"
     (mapReady$)="onMapReady($event)"
     class="mapa">
     
+    <map-polygon *ngIf="recorridoCercano != null"
+            [paths]="recorridoCercano.ruta"
+            [strokeColor]="recorridoCercano.color"
+            [strokeOpacity]="0.8"
+            [strokeWeight]="5"
+            [fillColor]="recorridoCercano.color"
+    >
+    </map-polygon>
     <marker 
     *ngIf="ubicacion != null"
       [position]="ubicacion"
@@ -45,7 +53,5 @@
       >
     </marker>
   </ng2-map>
-  <button type="button" (onClick)="calcularDistancia()">Clacular distancia</button>
-  <h1>{{distancia}}</h1>
   
 </div>

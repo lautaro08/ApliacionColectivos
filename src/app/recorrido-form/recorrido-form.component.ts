@@ -23,14 +23,11 @@ export class RecorridoFormComponent implements OnInit {
     {lat:-32.472636188236606,lng:-58.22779655456543}
   ];
 
-  //paradas del recorrido
-  paradasMarkers : google.maps.Marker[] = [];
-
   //recorrido usado para interactuar con el formulario
   recorridoModel : Recorrido;
 
   //variable para mantener el color que se va modificando
-  colorAuxiliar : string;
+  colorAuxiliar : string = '#000000';
 
   submitted = false;
 
@@ -65,10 +62,6 @@ export class RecorridoFormComponent implements OnInit {
         if(snapshot.val() != null){      
           this.recorridoModel = Recorrido.fromJson(snapshot.val());    
           this.recorridoModel.$key = snapshot.key;
-          this.recorridoModel.ruta = [];
-          for( let key in snapshot.val().ruta){
-            this.recorridoModel.ruta.push(snapshot.val().ruta[key]);
-          }       
         }       
         console.log(this.recorridoModel);
       });
@@ -100,20 +93,11 @@ export class RecorridoFormComponent implements OnInit {
     this.polygon = poligono;
   }
 
-  onMarkerInit(marcador){
-    this.paradasMarkers.push(marcador);
-  }
-
   colorChange(newColor){
     //metodo para actualizar los valores ya que el selector de color no soporta NgModel
     console.log('cambio el color: ', newColor);
     this.polygon.setOptions({strokeColor: newColor});
     this.colorAuxiliar = newColor;
-  }
-
-  //funcion que agrega los marcadores de las paradas
-  mapClicked($event){
-    //this.recorridoModel.paradas.push($event.latLng);
   }
 
   goBack(): void {

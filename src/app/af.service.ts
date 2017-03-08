@@ -100,19 +100,19 @@ export class AfService {
   createNewRecorrido(recorrido:any) {
       var db = this.afDb;
       var recorridoRef = db.list('/recorridos').push();
+      console.log("referencia: ", recorridoRef);
+      
       var nuevoRecorrido = {
         nombre: recorrido.nombre,
         descripcion: recorrido.descripcion,
-        color: recorrido.color
+        color: recorrido.color,
+        ruta: recorrido.ruta
       };
+
+      console.log("nuevo: ", nuevoRecorrido);
       recorridoRef.set(nuevoRecorrido)
         .then(_ => console.log('exito al crear el nuevo recorrido'))
         .catch(err => console.log(err, 'Error al guardar recorrido en firebase'));
-      recorrido.ruta.forEach(
-        function(element, index){
-          db.list('recorridos/'+recorridoRef.key+'/ruta').push(element);
-        }
-      );    
   }
 
   updateRecorrido(recorrido: any) {

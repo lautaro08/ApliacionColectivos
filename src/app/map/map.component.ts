@@ -1,3 +1,4 @@
+import { Recorrido } from './../shared/models/recorrido';
 import { AfService } from './../af.service';
 import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { Ng2MapComponent } from 'ng2-map';
@@ -20,12 +21,10 @@ export class MapComponent implements OnInit {
 
   ubicacion : any;
   destino : any;
-
+  recorridoCercano :any;
   paradas : any[] = [];
 
   recorridos : any[] = [];
-
-  distancia : any = "distancia desconocidaaaaaaaa";
 
   //opcion 1: selecciona marcador de ubicacion
   //opcion 2: selecciona marcador de destino
@@ -146,10 +145,6 @@ export class MapComponent implements OnInit {
     return distance.toFixed(2);
   }
 
-  calcularDistancia(){
-    this.paradasMasCercanas();
-  }
-
   paradasMasCercanas(){
     var distMinUbicacion  = [];
     var distMinDestino = [];
@@ -205,10 +200,20 @@ export class MapComponent implements OnInit {
     }
 
     
-    console.log("sumatorio: ", sumatoriaDistancias.sort());
-    var minimo = sumatoriaDistancias.pop();
+    console.log("sumatoria keys: ", sumatoriaDistancias);
+    var minimo = Number.MAX_SAFE_INTEGER,keyResult;
 
+    for(var recorrido of this.recorridos){
+      if(sumatoriaDistancias[recorrido.$key]< minimo){
+        minimo = sumatoriaDistancias[recorrido.$key];
+        keyResult = recorrido.$key;
+      }
+    }
+
+    this.recorridoCercano = this.recorridos.find(rec=>rec.$key == keyResult);
+    console.log(this.recorridoCercano);
     console.log("minimo: ", minimo);
+    console.log("key", keyResult);
   }
 
   fuerzaBruta(paradas, ubicacion):any{
