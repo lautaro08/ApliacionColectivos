@@ -7,14 +7,14 @@
       placeholder="Introduce tu ubicacion"
       onreadystatechange="acInitialized($event)" 
       (place_changed)="placeChanged()" >
-      <button md-button (click)="myLocation(1)"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
-      <button md-button (click)="optionChange(1)"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+      <button md-button (click)="myLocation(true)"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+      <button md-button (click)="elegirUbicacionDelMapa(true)"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
     </div>
     <div class="linea-formulario">
       <span class="label"> Destino </span>
       <input>
-      <button md-button (click)="myLocation(2)"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
-      <button md-button (click)="optionChange(2)"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+      <button md-button (click)="myLocation(false)"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+      <button md-button (click)="elegirUbicacionDelMapa(false)"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
     </div>  
   </div>
 
@@ -24,18 +24,21 @@
     class="mapa">
     
     <map-polygon *ngIf="recorridoCercano != null"
+            (initialized$)="onPolygonInit($event)"          
             [paths]="recorridoCercano.ruta"
             [strokeColor]="recorridoCercano.color"
             [strokeOpacity]="0.8"
             [strokeWeight]="5"
             [fillColor]="recorridoCercano.color"
+            [fillOpacity]="0"
+            [clickable]="false"
     >
     </map-polygon>
     <marker 
-    *ngIf="ubicacion != null"
+    *ngIf="origen != null"
       [position]="ubicacion"
       [draggable]="true"
-      (dragend)="actualizarUbicaciones($event,false)"
+      (dragend)="actualizarUbicaciones($event,true)"
     >
     </marker>
 
@@ -43,7 +46,7 @@
     *ngIf="destino != null"
       [position] = "destino"
       [draggable]="true"
-      (dragend)="actualizarUbicaciones($event,true)"
+      (dragend)="actualizarUbicaciones($event,false)"
     >
     </marker>
 

@@ -18,17 +18,13 @@ export class MapComponent implements OnInit {
   mapa : google.maps.Map;
 
   autocomplete: google.maps.places.Autocomplete;
-
-  ubicacion : any;
+  poligono : google.maps.Polygon;
+  origen : any;
   destino : any;
   recorridoCercano :any;
   paradas : any[] = [];
 
   recorridos : any[] = [];
-
-  //opcion 1: selecciona marcador de ubicacion
-  //opcion 2: selecciona marcador de destino
-  option : number = 1;
 
   constructor(private ref: ChangeDetectorRef, private afService: AfService) { }
 
@@ -43,6 +39,10 @@ export class MapComponent implements OnInit {
       .subscribe(
           recorridos => recorridos = this.recorridos = recorridos
         ); 
+  }
+
+  onPolygonInit(poligono){
+    this.poligono = poligono;
   }
 
   onMapReady(map){
@@ -83,23 +83,18 @@ export class MapComponent implements OnInit {
       window.alert("Autocomplete's returned place contains no geometry");
       return;
     }
-    this.ubicacion = place.geometry.location.toJSON();
+    this.origen = place.geometry.location.toJSON();
   }
 
-  optionChange(op: number){
-    this.option = op;
-    console.log("opcion " + this.option + "seleccionada");
-    switch(this.option){
-      case 1: 
-        this.ubicacion = this.mapa.getCenter();
-        break;
-      case 2:
-        this.destino = this.mapa.getCenter();
-        break;
+  elegirUbicacionDelMapa(esOrigen){
+    if(esOrigen){
+      this.origen = this.mapa.getCenter();
+    }else{
+      this.destino = this.mapa.getCenter();
     }
   }
 
-  myLocation(option){
+  myLocation(esOrigen){
     //Averiguar porque dentro de nua funcion de callback no se pueden referenciar
     //variables con this.
     var th = this;
@@ -111,14 +106,12 @@ export class MapComponent implements OnInit {
         };
 
         th.mapa.setCenter(pos);
-        switch(option){
-          case 1: 
-            th.ubicacion = pos;
-            break;
-          case 2:
-            th.destino = pos;
-            break;
+        if(esOrigen){
+          th.origen = pos;
+        }else{
+          th.destino = pos;
         }
+
       }, function() {
         this.handleLocationError(true, th.mapa.getCenter());
       });
@@ -146,30 +139,30 @@ export class MapComponent implements OnInit {
   }
 
   paradasMasCercanas(){
-    var distMinUbicacion  = [];
+    var distMinOrigen  = [];
     var distMinDestino = [];
-    var paradaMinUbicacion  = [];
+    var paradaMinOrigen  = [];
     var paradaMinDestino = [];
     var sumatoriaDistancias : any[] = [];
 
     for(var rec of this.recorridos){
-      distMinUbicacion[rec.$key] = Number.MAX_SAFE_INTEGER;
+      distMinOrigen[rec.$key] = Number.MAX_SAFE_INTEGER;
       distMinDestino[rec.$key] = Number.MAX_SAFE_INTEGER;
-      paradaMinUbicacion[rec.$key] = null;
+      paradaMinOrigen[rec.$key] = null;
       paradaMinDestino[rec.$key] = null;
       sumatoriaDistancias[rec.$key] = 0;
     }
 
     for(var parada of this.paradas){
-      var distanciaUbicacion = parseInt(this.Haversine(parada.pos.lat,
+      var distanciaorigen = parseInt(this.Haversine(parada.pos.lat,
                               parada.pos.lng,
-                              this.ubicacion.lat(),
-                              this.ubicacion.lng()).valueOf()); 
+                              this.origen.lat(),
+                              this.origen.lng()).valueOf()); 
       var distanciaDestino = parseInt(this.Haversine(parada.pos.lat,
                               parada.pos.lng,
                               this.destino.lat(),
                               this.destino.lng()).valueOf()); 
-      console.log("distancia a la ubicacion: ", distanciaUbicacion);
+      console.log("distancia a la origen: ", distanciaorigen);
       console.log("distancia al destino: ", distanciaDestino);
 
       console.log("recorridos de la parada: ", parada.recorridos);
@@ -179,11 +172,11 @@ export class MapComponent implements OnInit {
         console.log("el colectivo pasa por la parada "+rec.$key+"?", parada.recorridos.includes(rec.$key.toString()));
         if( parada.recorridos.includes(rec.$key.toString())){
 
-          console.log("distancia a la ubicacion ADENTRO: ", distanciaUbicacion);
+          console.log("distancia a la origen ADENTRO: ", distanciaorigen);
           console.log("distancia al destino ADENTRO: ", distanciaDestino);
-          if(distanciaUbicacion <= distMinUbicacion[rec.$key]){
-            distMinUbicacion[rec.$key] = distanciaUbicacion;
-            paradaMinUbicacion[rec.$key] = parada;
+          if(distanciaorigen <= distMinOrigen[rec.$key]){
+            distMinOrigen[rec.$key] = distanciaorigen;
+            paradaMinOrigen[rec.$key] = parada;
           }
 
           if(distanciaDestino <= distMinDestino[rec.$key]){
@@ -191,11 +184,11 @@ export class MapComponent implements OnInit {
             paradaMinDestino[rec.$key] = parada;
           }
 
-          console.log("distAlAUbicacion: ", distMinUbicacion);
+          console.log("distAlAorigen: ", distMinOrigen);
           console.log("distAlDestino: ", distMinDestino);
         }
 
-        sumatoriaDistancias[rec.$key] = distMinDestino[rec.$key] + distMinUbicacion[rec.$key];
+        sumatoriaDistancias[rec.$key] = distMinDestino[rec.$key] + distMinOrigen[rec.$key];
       }
     }
 
@@ -210,42 +203,28 @@ export class MapComponent implements OnInit {
       }
     }
 
-    this.recorridoCercano = this.recorridos.find(rec=>rec.$key == keyResult);
+    if(this.recorridoCercano != null){
+      this.poligono.setPath(this.recorridos.find(rec=>rec.$key == keyResult).ruta);
+      this.poligono.setOptions({strokeColor: this.recorridos.find(rec=>rec.$key == keyResult).color});
+    }else{
+      this.recorridoCercano = this.recorridos.find(rec=>rec.$key == keyResult);
+    }
+    
     console.log(this.recorridoCercano);
     console.log("minimo: ", minimo);
     console.log("key", keyResult);
   }
 
-  fuerzaBruta(paradas, ubicacion):any{
-    var masCercana: any[] = [null, parseInt(this.Haversine(paradas[0].pos.lat,
-                              paradas[0].pos.lng,
-                              ubicacion.lat(),
-                              ubicacion.lng()).valueOf())];
-      console.log(masCercana);
-    this.paradas.forEach(parada =>{
-      var distancia = parseInt(this.Haversine(parada.pos.lat,
-                              parada.pos.lng,
-                              ubicacion.lat(),
-                              ubicacion.lng()).valueOf());  
-      if(distancia <= masCercana[1]){
-        masCercana[0] = parada;
-        masCercana[1] = distancia; 
-      }
-    });
-    return  masCercana[0].pos;
-  }
-
-  actualizarUbicaciones(ubicacion, esLlegada){
-    if(esLlegada){
-      this.destino = ubicacion.latLng;
+  actualizarUbicaciones(ubicacion, esOrigen){
+    if(esOrigen){
+      this.origen = ubicacion.latLng;
     }else{
-      this.ubicacion = ubicacion.latLng;
+      this.destino = ubicacion.latLng;
     }
-    console.log("ubicacion: ", this.ubicacion.lat());
-    console.log("destino: ", this.destino.lat());
   }
-  handleLocationError(browserHasGeolocation, pos) {
 
+  handleLocationError(browserHasGeolocation, pos) {
+    //sin implementar
   }
 
 }
