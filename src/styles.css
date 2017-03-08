@@ -25,15 +25,7 @@ pantalla y no obliga al usuario a hacer scroll
   flex: 1;
   display: flex; }
 
-app-inicio {
-  width: 100%;
-  background: #0D47A1; }
-
-app-recorridos {
-  width: 100%;
-  background: #0D47A1; }
-
-app-map {
+app-inicio, app-recorridos, app-map, app-admin {
   width: 100%;
   background: #0D47A1; }
 
@@ -240,5 +232,10 @@ app-map .container-fluid {
 
 app-map .mapa {
   flex: 1 1 0; }
+
+app-admin .container-fluid {
+  height: 100%;
+  display: flex;
+  flex-direction: column; }
 
 /*# sourceMappingURL=styles.css.map */

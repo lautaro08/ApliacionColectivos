@@ -63,10 +63,10 @@ export class AfService {
   saveParadas(paradas) {
       var dbParadas = this.afDb.list('/paradas');
       dbParadas.remove();
-      paradas.forEach(parada =>{
-          delete parada.$key;
+      paradas.forEach((parada : Parada) =>{
           if(parada.recorridos === undefined){parada.recorridos = []}
-          dbParadas.push(parada)
+          delete parada.$key;
+          dbParadas.push(parada);
       });
   }
 

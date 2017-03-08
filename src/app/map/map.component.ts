@@ -40,7 +40,7 @@ export class MapComponent implements OnInit {
         paradas => paradas = this.paradas = paradas
       );
     this.afService.findAllRecorridos()
-      //.do(console.log)
+      .do(console.log)
       .subscribe(
           recorridos => recorridos = this.recorridos = recorridos
         ); 
@@ -147,7 +147,68 @@ export class MapComponent implements OnInit {
   }
 
   calcularDistancia(){
-    this.fuerzaBruta(this.paradas, this.ubicacion);
+    this.paradasMasCercanas();
+  }
+
+  paradasMasCercanas(){
+    var distMinUbicacion  = [];
+    var distMinDestino = [];
+    var paradaMinUbicacion  = [];
+    var paradaMinDestino = [];
+    var sumatoriaDistancias : any[] = [];
+
+    for(var rec of this.recorridos){
+      distMinUbicacion[rec.$key] = Number.MAX_SAFE_INTEGER;
+      distMinDestino[rec.$key] = Number.MAX_SAFE_INTEGER;
+      paradaMinUbicacion[rec.$key] = null;
+      paradaMinDestino[rec.$key] = null;
+      sumatoriaDistancias[rec.$key] = 0;
+    }
+
+    for(var parada of this.paradas){
+      var distanciaUbicacion = parseInt(this.Haversine(parada.pos.lat,
+                              parada.pos.lng,
+                              this.ubicacion.lat(),
+                              this.ubicacion.lng()).valueOf()); 
+      var distanciaDestino = parseInt(this.Haversine(parada.pos.lat,
+                              parada.pos.lng,
+                              this.destino.lat(),
+                              this.destino.lng()).valueOf()); 
+      console.log("distancia a la ubicacion: ", distanciaUbicacion);
+      console.log("distancia al destino: ", distanciaDestino);
+
+      console.log("recorridos de la parada: ", parada.recorridos);
+      for(var rec of this.recorridos){
+        //Si pasa el recorrido REc por la parada
+        
+        console.log("el colectivo pasa por la parada "+rec.$key+"?", parada.recorridos.includes(rec.$key.toString()));
+        if( parada.recorridos.includes(rec.$key.toString())){
+
+          console.log("distancia a la ubicacion ADENTRO: ", distanciaUbicacion);
+          console.log("distancia al destino ADENTRO: ", distanciaDestino);
+          if(distanciaUbicacion <= distMinUbicacion[rec.$key]){
+            distMinUbicacion[rec.$key] = distanciaUbicacion;
+            paradaMinUbicacion[rec.$key] = parada;
+          }
+
+          if(distanciaDestino <= distMinDestino[rec.$key]){
+            distMinDestino[rec.$key] = distanciaDestino;
+            paradaMinDestino[rec.$key] = parada;
+          }
+
+          console.log("distAlAUbicacion: ", distMinUbicacion);
+          console.log("distAlDestino: ", distMinDestino);
+        }
+
+        sumatoriaDistancias[rec.$key] = distMinDestino[rec.$key] + distMinUbicacion[rec.$key];
+      }
+    }
+
+    
+    console.log("sumatorio: ", sumatoriaDistancias.sort());
+    var minimo = sumatoriaDistancias.pop();
+
+    console.log("minimo: ", minimo);
   }
 
   fuerzaBruta(paradas, ubicacion):any{
@@ -171,10 +232,12 @@ export class MapComponent implements OnInit {
 
   actualizarUbicaciones(ubicacion, esLlegada){
     if(esLlegada){
-      this.destino = this.fuerzaBruta(this.paradas,ubicacion.latLng);
+      this.destino = ubicacion.latLng;
     }else{
-      this.ubicacion = this.fuerzaBruta(this.paradas,ubicacion.latLng);
+      this.ubicacion = ubicacion.latLng;
     }
+    console.log("ubicacion: ", this.ubicacion.lat());
+    console.log("destino: ", this.destino.lat());
   }
   handleLocationError(browserHasGeolocation, pos) {
 

@@ -53,20 +53,11 @@ pantalla y no obliga al usuario a hacer scroll
     display: flex;
 }
 
-app-inicio {
+app-inicio, app-recorridos, app-map, app-admin {
     width: 100%;
     background: $principal_obscuro;
 }
 
-app-recorridos {
-    width: 100%;
-    background: $principal_obscuro;
-}
-
-app-map {
-    width: 100%;
-    background: $principal_obscuro;
-}
 //--------------------------------
 //  ESTILOS PARA EL TOOLBAR PRINCIPAL (header)
 //--------------------------------
@@ -343,4 +334,14 @@ app-map .container-fluid{
 
 app-map .mapa{
     flex: 1 1 0;
+}
+
+//--------------------------------
+//  ESTILOS PARA EL SELECTOR ADMIN
+//--------------------------------
+
+app-admin .container-fluid{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
