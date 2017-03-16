@@ -45,9 +45,17 @@ export class MapComponent implements OnInit {
     this.poligono = poligono;
   }
 
-  onMapReady(map){
+  onMapReady(map:google.maps.Map) {
     this.mapa = map;
-    //console.log('mapa referenciado: ',this.mapa);
+    
+    var mapOptions =  {
+      zoomControl:false, 
+      mapTypeControl:false, 
+      scaleControl:false, 
+      streetViewControl:false, 
+      rotateControl:false
+    }
+    map.setOptions(mapOptions); 
   }
 
   markerInitialized(marcador : google.maps.Marker){
@@ -72,18 +80,18 @@ export class MapComponent implements OnInit {
       componentRestrictions: {country: 'ar'}
     };
 
-    this.autocomplete = new google.maps.places.Autocomplete(autocompleteRef, options);
-   // console.log('autocomplete referenciado: ', this.autocomplete);
+    this.autocomplete = autocompleteRef;
+    console.log('autocomplete referenciado: ', this.autocomplete);
   }
 
   placeChanged(place: google.maps.places.PlaceResult) {
-    this.ref.detectChanges();
-    var place = this.autocomplete.getPlace();
+    console.log("place: ", place);
     if (!place.geometry) {
       window.alert("Autocomplete's returned place contains no geometry");
       return;
     }
-    this.origen = place.geometry.location.toJSON();
+    this.origen = place.geometry.location;
+    this.ref.detectChanges();
   }
 
   elegirUbicacionDelMapa(esOrigen){

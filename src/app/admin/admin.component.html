@@ -1,8 +1,20 @@
-<div class="container-fluid">                 
-<md-tab-group>
-  <md-tab label="Colectivo">
-    <!-- Table -->
-      <table class="table">
+<div class="container-fluid">                
+<ul class="nav nav-tabs" role="tablist">
+  <li class="nav-item">
+    <a class="active nav-link" href="#colectivos" role="tab" data-toggle="tab">Colectivos</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#recorridos" role="tab" data-toggle="tab">Recorridos</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#paradas" role="tab" data-toggle="tab">Paradas</a>
+  </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane fade in active" id="colectivos">
+    <table class="table">
         <thead>
           <tr>
             <th>Id</th>
@@ -19,24 +31,28 @@
             <td>{{colectivo.$key}}</td>
             <td>
               <a [routerLink]="['/colectivos', colectivo.$key]">
-                <button class="boton_editar" md-raised-button><md-icon>mode_edit</md-icon></button>
+                <button class="boton_editar" md-raised-button>
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                </button>
               </a>
             </td>
-            <td><button class="boton_eliminar" md-raised-button (click)="removeColectivo(colectivo.$key)"><md-icon>delete</md-icon></button></td>
+            <td>
+              <button class="boton_eliminar" md-raised-button (click)="removeColectivo(colectivo.$key)">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
 
-    <span class="app-action" [class.m2app-dark]="true">
-      <a routerLink="/colectivos/nuevo">
-        <button md-fab><md-icon>add</md-icon></button>
-      </a>
-    </span>
-
-  </md-tab>
-  <md-tab label="Recorrido">
-    <!-- Table -->
-      <table class="table">
+      <span class="app-action" [class.m2app-dark]="true">
+        <a routerLink="/colectivos/nuevo">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </a>
+      </span>
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="recorridos">
+    <table class="table">
         <thead>
           <tr>
             <th>Nombre</th>
@@ -53,21 +69,29 @@
             <td>{{recorrido.$key}}</td>
             <td>
               <a [routerLink]="['/recorridos', recorrido.$key]">
-                <button class="boton_editar" md-raised-button><md-icon>mode_edit</md-icon></button>
+                <button class="boton_editar" md-raised-button>
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                </button>
               </a>
             </td>
-            <td><button class="boton_eliminar" md-raised-button (click)="removeRecorrido(recorrido.$key)"><md-icon>delete</md-icon></button></td>
+            <td>
+              <button class="boton_eliminar" md-raised-button (click)="removeRecorrido(recorrido.$key)">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
       <span class="app-action" [class.m2app-dark]="true">
-      <a routerLink="/recorridos/nuevo">
-        <button md-fab><md-icon>add</md-icon></button>
-      </a>
-    </span>
-  </md-tab>
-  <md-tab label="Paradas">
+        <a routerLink="/recorridos/nuevo">
+          <button md-fab>
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+        </a>
+      </span>
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="paradas">
     <admin-paradas></admin-paradas>
-  </md-tab>
-</md-tab-group>
+  </div>
+</div>
 </div>

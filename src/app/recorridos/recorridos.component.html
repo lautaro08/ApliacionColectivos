@@ -25,17 +25,13 @@
                 <ng2-map *ngIf="recorridos != null" center="Concepcion del uruguay, Argentina" 
                     class="map" (mapReady$)="onMapReady($event)">
                     <div *ngFor="let colectivo of colectivos">
-                        <marker (click)="markerClicked($event, colectivo)" *ngIf="colectivo.ubicacion != null" [position]="colectivo.ubicacion">
+                        <marker (click)="markerClicked($event, colectivo)" 
+                        *ngIf="colectivo.ubicacion != null" 
+                        [position]="colectivo.ubicacion"
+                        (initialized$)="markerInitialized($event)">
                         </marker>
                     </div>
-                    <info-window id="iw">
-                        <div class="contenidoInfo">
-                            <h1>
-                                Estoy re loco
-                            </h1>
-                            id [[id]], patente [[patente]]
-                        </div>
-                    </info-window>
+
                     <map-polygon *ngFor="let recorrido of recorridos; let i=index"
                     (click)="mouseOverPolygon(i)" 
                     (initialized$)="onPolygonInit($event, recorrido, index)"  

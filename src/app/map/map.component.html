@@ -1,22 +1,26 @@
 <div class="container-fluid p-0"> 
-  <div class="formulario-posicion">
-    <div class="linea-formulario">
-      <span class="label"> Origen </span>
-      <input places-auto-complete #autocompleteOrigen
-      (onselect)="initialized($event)"
-      placeholder="Introduce tu ubicacion"
-      onreadystatechange="acInitialized($event)" 
-      (place_changed)="placeChanged()" >
-      <button md-button (click)="myLocation(true)"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
-      <button md-button (click)="elegirUbicacionDelMapa(true)"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
-    </div>
-    <div class="linea-formulario">
-      <span class="label"> Destino </span>
-      <input>
-      <button md-button (click)="myLocation(false)"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
-      <button md-button (click)="elegirUbicacionDelMapa(false)"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
-    </div>  
+  <div class="botones-posicion d-flex">
+    <div class="lineas">  
+      <div class="linea-formulario">
+        <button type="button" class="btn btn-secondary">
+          <span>1</span>
+          El punto de origen
+          <i class="fa fa-bars" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="linea-formulario">
+        <button type="button" class="btn btn-secondary">
+          <span>2</span>
+          El punto de destino
+          <i class="fa fa-bars" aria-hidden="true"></i>
+        </button>
+      </div> 
+    </div>    
+    <button type="button" class="change">
+      <i class="fa fa-exchange" aria-hidden="true"></i>
+    </button>
   </div>
+
 
   <ng2-map center="Concepcion del uruguay, Argentina" 
     (mapClick)="paradasMasCercanas()"

@@ -55,14 +55,13 @@ pantalla y no obliga al usuario a hacer scroll
 
 app-inicio, app-recorridos, app-map, app-admin {
     width: 100%;
-    background: $principal_obscuro;
 }
 
 //--------------------------------
 //  ESTILOS PARA EL TOOLBAR PRINCIPAL (header)
 //--------------------------------
 .encabezado {
-    background: $texto;
+    background: $principal_obscuro;
     color: white;
     padding: .5rem 0;
     flex: 0 1 0px;
@@ -336,6 +335,60 @@ app-map .mapa{
     flex: 1 1 0;
 }
 
+app-map .botones-posicion{
+    background: $principal;
+}
+
+app-map .linea-formulario{
+    padding: .3rem;
+    display: flex;
+}
+
+app-map .linea-formulario button{
+    color: #888888;
+    padding: .4rem;
+    font-size: .7rem;
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+}
+
+app-map .linea-formulario button i{
+    margin-left: auto;
+}
+
+app-map .linea-formulario button span{
+    color: #fff;
+    font-size: .6rem;
+    display: inline-block;
+    background: $acento;
+    border-radius: .6rem;
+    line-height: 1.2rem;
+    margin-right: .8rem;
+    text-align: center;
+    width: 1.2rem;
+}
+
+app-map .lineas{
+    align-items: center;
+    flex: 1 1 0;
+}
+
+app-map .botones-posicion .change,
+app-map .botones-posicion .change:focus,
+app-map .botones-posicion .change:hover,
+app-map .botones-posicion .change:active,
+app-map .botones-posicion .change:visited{
+    border: none;
+    background: $principal;
+    color: #fff;
+    outline: 0;
+}
+
+.botones-posicion .change i{
+    transform: rotate(90deg);
+}
+
 //--------------------------------
 //  ESTILOS PARA EL SELECTOR ADMIN
 //--------------------------------
@@ -345,3 +398,4 @@ app-admin .container-fluid{
     display: flex;
     flex-direction: column;
 }
+
