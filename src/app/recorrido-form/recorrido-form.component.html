@@ -26,19 +26,17 @@
       </div>
       <div class="form-group">
         <label for="ruta">Ruta</label>
-        <ng2-map center= "Concepcion del uruguay, Argentina" name="ruta" (click)="mapClicked($event)">
+        <ng2-map center= "Concepcion del uruguay, Argentina" name="ruta">
           
-          <map-polygon
+          <polyline
             [editable]="true"
             [clickable]="false"
-            [paths]="recorridoModel.ruta"
+            [path]="recorridoModel.ruta"
             [strokeColor]="recorridoModel.color"
             [strokeOpacity]="0.8"
             [strokeWeight]="5"
-            [fillColor]="recorridoModel.color"
-            [fillOpacity]="0"
-            (initialized$)="onPolygonInit($event)"
-          ></map-polygon>
+            (initialized$)="onPolylineInit($event)"
+          ></polyline>
 
         </ng2-map>
       </div>

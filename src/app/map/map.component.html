@@ -27,17 +27,15 @@
     (mapReady$)="onMapReady($event)"
     class="mapa">
     
-    <map-polygon *ngIf="recorridoCercano != null"
-            (initialized$)="onPolygonInit($event)"          
-            [paths]="recorridoCercano.ruta"
+    <polyline *ngIf="recorridoCercano != null"
+            (initialized$)="onPolylineInit($event)"          
+            [path]="recorridoCercano.ruta"
             [strokeColor]="recorridoCercano.color"
             [strokeOpacity]="0.8"
             [strokeWeight]="5"
-            [fillColor]="recorridoCercano.color"
-            [fillOpacity]="0"
             [clickable]="false"
     >
-    </map-polygon>
+    </polyline>
     <marker 
     *ngIf="origen != null"
       [position]="ubicacion"

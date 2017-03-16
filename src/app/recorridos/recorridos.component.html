@@ -32,15 +32,13 @@
                         </marker>
                     </div>
 
-                    <map-polygon *ngFor="let recorrido of recorridos; let i=index"
-                    (click)="mouseOverPolygon(i)" 
-                    (initialized$)="onPolygonInit($event, recorrido, index)"  
-                    [fillOpacity]="0" 
+                    <polyline *ngFor="let recorrido of recorridos; let i=index"
+                    (click)="mouseOverPolyline(i)" 
+                    (initialized$)="onPolylineInit($event, recorrido, index)"  
                     [strokeColor]="recorrido.color" 
                     [strokeOpacity]="0.8" 
-                    [strokeWeight]="5" 
-                    id="poligono_{{i}}">
-                    </map-polygon>
+                    [strokeWeight]="5">
+                    </polyline>
                 </ng2-map>
             </section>
         </div>

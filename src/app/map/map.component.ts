@@ -18,7 +18,7 @@ export class MapComponent implements OnInit {
   mapa : google.maps.Map;
 
   autocomplete: google.maps.places.Autocomplete;
-  poligono : google.maps.Polygon;
+  polyline : google.maps.Polyline;
   origen : any;
   destino : any;
   recorridoCercano :any;
@@ -41,8 +41,8 @@ export class MapComponent implements OnInit {
         ); 
   }
 
-  onPolygonInit(poligono){
-    this.poligono = poligono;
+  onPolylineInit(polilinea){
+    this.polyline = polilinea;
   }
 
   onMapReady(map:google.maps.Map) {
@@ -212,8 +212,8 @@ export class MapComponent implements OnInit {
     }
 
     if(this.recorridoCercano != null){
-      this.poligono.setPath(this.recorridos.find(rec=>rec.$key == keyResult).ruta);
-      this.poligono.setOptions({strokeColor: this.recorridos.find(rec=>rec.$key == keyResult).color});
+      this.polyline.setPath(this.recorridos.find(rec=>rec.$key == keyResult).ruta);
+      this.polyline.setOptions({strokeColor: this.recorridos.find(rec=>rec.$key == keyResult).color});
     }else{
       this.recorridoCercano = this.recorridos.find(rec=>rec.$key == keyResult);
     }

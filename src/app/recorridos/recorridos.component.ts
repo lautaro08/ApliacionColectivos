@@ -17,7 +17,7 @@ export class RecorridosComponent {
 
         colectivos:Colectivo[]; 
 
-        poligonos:google.maps.Polygon[] = []; 
+        polylines:google.maps.Polyline[] = []; 
 
         constructor(private afService:AfService) {
 
@@ -61,31 +61,25 @@ export class RecorridosComponent {
         marcador.setIcon(icon);
         }
 
-        onPolygonInit(polygono, recorrido:Recorrido, index:number) {
-                this.poligonos.push(polygono); 
-                var path = []; 
-                for (let key in recorrido.ruta) {
-                        console.log(recorrido.ruta[key]); 
-                        path.push(recorrido.ruta[key]); 
-                }
-                console.log(path); 
-                polygono.setPaths(path); 
+        onPolylineInit(polilinea, recorrido:Recorrido, index:number) {
+                this.polylines.push(polilinea); 
+                polilinea.setPath(recorrido.ruta); 
         }
 
         mouseOverPolygon(index:number) {
-                var res = this.poligonos[index]; 
+                var res = this.polylines[index]; 
                 console.log(index, res); 
         }
 
         recorridoSelected(index:number) {
-                this.poligonos.forEach((poligono, i) =>  {
+                this.polylines.forEach((polilinea, i) =>  {
                         if (i != index && index != this.ultimoSeleccionado) {
-                poligono.setOptions( {
+                polilinea.setOptions( {
                 strokeColor:'#888888', 
                 strokeOpacity:0.3
                         }); 
                 }else {
-                poligono.setOptions( {
+                polilinea.setOptions( {
                 strokeColor:this.recorridos[i].color, 
                 strokeOpacity:0.8
                         }); 

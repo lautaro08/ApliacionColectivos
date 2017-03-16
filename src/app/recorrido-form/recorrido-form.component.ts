@@ -35,7 +35,7 @@ export class RecorridoFormComponent implements OnInit {
   creando : boolean;
 
   //referencia al poligono de la ruta para extraer los cambios que se hacen a la ruta
-  polygon : google.maps.Polygon; 
+  polyline : google.maps.Polyline; 
 
   constructor(
     //Se injecta el servicio de firebase para poder guardar el nuevo recorrido
@@ -73,7 +73,7 @@ export class RecorridoFormComponent implements OnInit {
     var recorrido = this.recorridoModel;
     //se limpia la ruta anterior para poder guardar el path modificado
     recorrido.ruta = [];
-    this.polygon.getPath().getArray().forEach(
+    this.polyline.getPath().getArray().forEach(
       function(element, index){      
         recorrido.ruta.push(element.toJSON());
       }
@@ -87,16 +87,16 @@ export class RecorridoFormComponent implements OnInit {
     this.router.navigate(['/recorridos/todos']);
   }
 
-  onPolygonInit(poligono){
+  onPolylineInit(polilinea){
     //se cguarda la referencia al poligono para poder obtener el path modificado
-    console.log('poligono referenciado');
-    this.polygon = poligono;
+    console.log('polilinea referenciada');
+    this.polyline = polilinea;
   }
 
   colorChange(newColor){
     //metodo para actualizar los valores ya que el selector de color no soporta NgModel
     console.log('cambio el color: ', newColor);
-    this.polygon.setOptions({strokeColor: newColor});
+    this.polyline.setOptions({strokeColor: newColor});
     this.colorAuxiliar = newColor;
   }
 
