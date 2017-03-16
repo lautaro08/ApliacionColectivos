@@ -1,7 +1,7 @@
 import {Colectivo }from './../shared/models/colectivo'; 
 import {Recorrido }from './../shared/models/recorrido'; 
 import {AfService }from './../af.service'; 
-import {Component, OnInit }from '@angular/core'; 
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; 
 
 @Component( {
         selector:'app-recorridos', 
@@ -19,7 +19,8 @@ export class RecorridosComponent {
 
         polylines:google.maps.Polyline[] = []; 
 
-        constructor(private afService:AfService) {
+
+        constructor(private afService:AfService, private changeDetectorRef: ChangeDetectorRef) {
 
         }
 
@@ -66,11 +67,6 @@ export class RecorridosComponent {
                 polilinea.setPath(recorrido.ruta); 
         }
 
-        mouseOverPolygon(index:number) {
-                var res = this.polylines[index]; 
-                console.log(index, res); 
-        }
-
         recorridoSelected(index:number) {
                 this.polylines.forEach((polilinea, i) =>  {
                         if (i != index && index != this.ultimoSeleccionado) {
@@ -89,7 +85,9 @@ export class RecorridosComponent {
                 this.ultimoSeleccionado = -1; 
                 }else {
                 this.ultimoSeleccionado = index; 
-                }
+        }
+/*IMPORTANTEEEEEEEEE INVESTIGARRRRRR ESTO*/
+                this.changeDetectorRef.detectChanges() 
         }
 
         markerClicked(event, colectivo:Colectivo) {
@@ -99,5 +97,5 @@ export class RecorridosComponent {
                         patente:colectivo.patente
                 })
         }
-
+        
 }

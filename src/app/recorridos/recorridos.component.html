@@ -9,7 +9,7 @@
             <section class="lista-recorridos">
                 <div *ngIf="recorridos != null" class="recorridos">
                     <div *ngFor="let recorrido of recorridos; let i = index" class="card" 
-                    [class.selected]="i === ultimoSeleccionado"
+                    [class.selected]="i == ultimoSeleccionado"
                     (click)="recorridoSelected(i)">
                         <div class="card-block">
                             <h4 class="card-title">{{recorrido.nombre}}</h4>
@@ -33,7 +33,7 @@
                     </div>
 
                     <polyline *ngFor="let recorrido of recorridos; let i=index"
-                    (click)="mouseOverPolyline(i)" 
+                    (click)="recorridoSelected(i)" 
                     (initialized$)="onPolylineInit($event, recorrido, index)"  
                     [strokeColor]="recorrido.color" 
                     [strokeOpacity]="0.8" 
