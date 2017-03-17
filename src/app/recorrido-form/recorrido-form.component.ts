@@ -1,5 +1,5 @@
 import { Recorrido } from './../shared/models/recorrido';
-import { AfService } from './../af.service';
+import { AfService } from './../shared/services/af.service';
 import { Component, OnInit, Input} from '@angular/core';
 import { Router, ActivatedRoute, Params }   from '@angular/router';
 import { Location } from '@angular/common';
@@ -16,11 +16,8 @@ export class RecorridoFormComponent implements OnInit {
   titulo : string;
 
   //path predeterminado 
-  paths : any = [
-    {lat:-32.489723535115274,lng:-58.25878143310547},
-    {lat:-32.49406725857569,lng:-58.25921058654785},
-    {lat:-32.475460168462014,lng:-58.263587951660156},
-    {lat:-32.472636188236606,lng:-58.22779655456543}
+  puntoInicio : any = [
+    {lat:-32.489723535115274,lng:-58.25878143310547}
   ];
 
   //recorrido usado para interactuar con el formulario
@@ -52,7 +49,7 @@ export class RecorridoFormComponent implements OnInit {
     if(this.creando){
       //si se esta creando un recorrido
       this.titulo = 'Crear nuevo';
-      this.recorridoModel = new Recorrido('', '', '', '#000000', this.paths);
+      this.recorridoModel = new Recorrido('', '', '', '#000000', this.puntoInicio);
     }else{
       //si se esta editando se obtiene de la bd y se carga en recorridoModel
       this.titulo = 'Editar';
@@ -98,6 +95,14 @@ export class RecorridoFormComponent implements OnInit {
     console.log('cambio el color: ', newColor);
     this.polyline.setOptions({strokeColor: newColor});
     this.colorAuxiliar = newColor;
+  }
+
+  mapClicked(event: google.maps.MouseEvent){
+    this.polyline.getPath().push(event.latLng);  
+  }
+
+  deshacer(){
+    this.polyline.getPath().pop();
   }
 
   goBack(): void {

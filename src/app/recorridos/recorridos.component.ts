@@ -1,6 +1,6 @@
 import {Colectivo }from './../shared/models/colectivo'; 
 import {Recorrido }from './../shared/models/recorrido'; 
-import {AfService }from './../af.service'; 
+import {AfService }from './../shared/services/af.service'; 
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; 
 
 @Component( {

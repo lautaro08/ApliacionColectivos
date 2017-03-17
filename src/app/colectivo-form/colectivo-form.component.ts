@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AfService } from './../af.service';
+import { AfService } from './../shared/services/af.service';
 import { Colectivo } from './../shared/models/colectivo';
 import { Component, OnInit } from '@angular/core';
 

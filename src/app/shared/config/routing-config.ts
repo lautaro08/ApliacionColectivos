@@ -1,11 +1,11 @@
-import { InicioComponent } from './../inicio/inicio.component';
-import { ColectivoFormComponent } from './../colectivo-form/colectivo-form.component';
-import { RecorridoFormComponent } from './../recorrido-form/recorrido-form.component';
-import { RecorridosComponent } from './../recorridos/recorridos.component';
+import { InicioComponent } from './../../inicio/inicio.component';
+import { ColectivoFormComponent } from './../../colectivo-form/colectivo-form.component';
+import { RecorridoFormComponent } from './../../recorrido-form/recorrido-form.component';
+import { RecorridosComponent } from './../../recorridos/recorridos.component';
 import {Route, Routes} from "@angular/router";
-import { AppComponent } from '../app.component';
-import { MapComponent } from '../map/map.component';
-import { AdminComponent } from '../admin/admin.component';
+import { AppComponent } from '../../app.component';
+import { MapComponent } from '../../map/map.component';
+import { AdminComponent } from '../../admin/admin-main/admin-main.component';
 
 const indexRoute : Route = {
     path: '',

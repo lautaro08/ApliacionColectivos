@@ -1,6 +1,6 @@
-import { Parada } from './shared/models/parada';
-import { Recorrido } from './shared/models/recorrido';
-import { Colectivo } from './shared/models/colectivo';
+import { Parada } from '../../shared/models/parada';
+import { Recorrido } from '../../shared/models/recorrido';
+import { Colectivo } from '../../shared/models/colectivo';
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs/Rx";
 import {AngularFire, AuthProviders, AuthMethods, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';

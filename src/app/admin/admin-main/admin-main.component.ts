@@ -1,15 +1,15 @@
-import { DialogsService } from './../shared/services/dialogs.service';
-import { Recorrido } from './../shared/models/recorrido';
-import { Colectivo } from './../shared/models/colectivo';
-import { AfService } from './../af.service';
+import { DialogsService } from './../../shared/services/dialogs.service';
+import { Recorrido } from './../../shared/models/recorrido';
+import { Colectivo } from './../../shared/models/colectivo';
+import { AfService } from './../../shared/services/af.service';
 import { Component, OnInit, ViewContainerRef } from '@angular/core'
 import {Observable} from "rxjs/Rx";
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
 
 @Component({
   selector: 'app-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css'],
+  templateUrl: './admin-main.component.html',
+  styleUrls: ['./admin-main.component.css'],
   providers: [AfService]
 })
 export class AdminComponent implements OnInit {

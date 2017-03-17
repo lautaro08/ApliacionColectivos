@@ -1,7 +1,7 @@
 import { Ng2MapComponent } from 'ng2-map';
-import { Parada } from './../shared/models/parada';
-import { AfService } from './../af.service';
-import { Recorrido } from './../shared/models/recorrido';
+import { Parada } from './../../shared/models/parada';
+import { AfService } from './../../shared/services/af.service';
+import { Recorrido } from './../../shared/models/recorrido';
 import { Component, OnInit } from '@angular/core';
 
 Ng2MapComponent['apiUrl'] =

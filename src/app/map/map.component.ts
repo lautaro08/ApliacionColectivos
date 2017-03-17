@@ -1,5 +1,5 @@
 import { Recorrido } from './../shared/models/recorrido';
-import { AfService } from './../af.service';
+import { AfService } from './../shared/services/af.service';
 import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { Ng2MapComponent } from 'ng2-map';
 
