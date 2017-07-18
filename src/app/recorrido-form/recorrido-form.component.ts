@@ -12,27 +12,31 @@ import { Location } from '@angular/common';
 })
 export class RecorridoFormComponent implements OnInit {
 
+  //flag que indica si el recorrido es nuevo o se esta editando
+  creando : boolean;
+
   //puede ser CREAR NUEVO o EDITAR dependiendo
   titulo : string;
 
-  //path predeterminado 
+  //punto de inicio predeterminado para el recorrido
   puntoInicio : any = [
-    {lat:-32.489723535115274,lng:-58.25878143310547}
+    {lat:-32.489723535115274,lng:-58.25878143310547},
+    {lat:-32.499923535115274,lng:-58.27898143310547}
   ];
 
   //recorrido usado para interactuar con el formulario
   recorridoModel : Recorrido;
 
-  //variable para mantener el color que se va modificando
+  //variable para mantener el color que se va modificando, negro por defecto
   colorAuxiliar : string = '#000000';
 
   submitted = false;
 
-  //flag que indica si el recorrido es nuevo o se esta editando
-  creando : boolean;
-
   //referencia al poligono de la ruta para extraer los cambios que se hacen a la ruta
   polyline : google.maps.Polyline; 
+
+  begin : google.maps.Marker;
+  end : google.maps.Marker;
 
   constructor(
     //Se injecta el servicio de firebase para poder guardar el nuevo recorrido
@@ -50,6 +54,7 @@ export class RecorridoFormComponent implements OnInit {
       //si se esta creando un recorrido
       this.titulo = 'Crear nuevo';
       this.recorridoModel = new Recorrido('', '', '', '#000000', this.puntoInicio);
+
     }else{
       //si se esta editando se obtiene de la bd y se carga en recorridoModel
       this.titulo = 'Editar';
@@ -95,6 +100,22 @@ export class RecorridoFormComponent implements OnInit {
     console.log('cambio el color: ', newColor);
     this.polyline.setOptions({strokeColor: newColor});
     this.colorAuxiliar = newColor;
+  }
+  
+  markerInit(marker, isBegin){
+    if(isBegin){
+      this.begin = marker;    
+      marker.setPosition(this.puntoInicio[0]); 
+    }else{
+      this.end = marker;
+      marker.setPosition(this.puntoInicio[1]);
+    }
+  }
+
+  polylineDragged(){
+    console.log("polyline dragged");
+    this.begin.setPosition(this.polyline.getPath().getAt(0));
+    this.end.setPosition(this.polyline.getPath().getAt(this.polyline.getPath().getLength()-1));
   }
 
   mapClicked(event: google.maps.MouseEvent){

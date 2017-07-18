@@ -30,14 +30,22 @@
         center= "Concepcion del uruguay, Argentina" 
         name="ruta"
         >
-          
+          <marker 
+          (initialized$)="markerInit($event, true)"
+          ></marker>
+
+          <marker 
+          (initialized$)="markerInit($event, false)"
+          ></marker>
           <polyline
             [editable]="true"
             [clickable]="false"
+            [draggable]="true"
             [path]="recorridoModel.ruta"
             [strokeColor]="recorridoModel.color"
             [strokeOpacity]="0.8"
             [strokeWeight]="5"
+            (drag)="polylineDragged()"
             (initialized$)="onPolylineInit($event)"
           ></polyline>
 

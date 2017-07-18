@@ -104,6 +104,37 @@ app-inicio, app-recorridos, app-map, app-admin {
     color: $principal;
 }
 
+@media (min-width:30rem){
+    #menu-principal{
+        display: block;
+    }
+
+    #menu-principal ul{
+        display: flex;
+        margin: 0 0 0 auto;
+        
+    }
+
+    #menu-principal ul a {
+        border: none;
+        padding: .8rem;
+        text-transform: capitalize;
+        transition: all .8s ease;
+    }
+
+    #menu-principal ul a:hover, #menu-principal ul li .active {
+        color: $principal;
+        border-bottom: solid 4px $principal;
+    }
+
+    .boton-menu{
+        display: none;
+    }
+
+    .encabezado .container {
+        flex-wrap: nowrap
+    }
+}
 
 /*Estilos para el boton del menu*/
 

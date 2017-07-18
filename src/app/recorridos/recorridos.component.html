@@ -13,7 +13,7 @@
                     (click)="recorridoSelected(i)">
                         <div class="card-block">
                             <h4 class="card-title">{{recorrido.nombre}}</h4>
-                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">{{recorrido.descripcion}}</h6>
                             <p class="card-text"></p>
                         </div>
                     </div>
@@ -25,10 +25,18 @@
                 <ng2-map *ngIf="recorridos != null" center="Concepcion del uruguay, Argentina" 
                     class="map" (mapReady$)="onMapReady($event)">
                     <div *ngFor="let colectivo of colectivos">
-                        <marker (click)="markerClicked($event, colectivo)" 
+                        <marker 
                         *ngIf="colectivo.ubicacion != null" 
                         [position]="colectivo.ubicacion"
-                        (initialized$)="markerInitialized($event)">
+                        (initialized$)="markerColectivoInitialized($event)">
+                        </marker>
+                    </div>
+
+                    <div *ngFor="let parada of paradas">
+                        <marker (click)="markerClicked($event, colectivo)" 
+                        *ngIf="parada.pos != null" 
+                        [position]="parada.pos"
+                        (initialized$)="markerParadaInitialized($event)">
                         </marker>
                     </div>
 

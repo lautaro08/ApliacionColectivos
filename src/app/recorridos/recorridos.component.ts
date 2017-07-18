@@ -17,6 +17,8 @@ export class RecorridosComponent {
 
         colectivos:Colectivo[]; 
 
+        paradas:any[];
+
         polylines:google.maps.Polyline[] = []; 
 
 
@@ -29,6 +31,11 @@ export class RecorridosComponent {
                 .do(console.log)
                 .subscribe(
                         recorridos => recorridos = this.recorridos = recorridos
+                ); 
+                this.afService.findAllParadas()
+                .do(console.log)
+                .subscribe(
+                        paradas => paradas = this.paradas = paradas
                 ); 
                 this.afService.findAllColectivos()
                         .do(console.log)
@@ -51,9 +58,19 @@ export class RecorridosComponent {
                 map.setOptions(mapOptions); 
         }
 
-        markerInitialized(marcador : google.maps.Marker){
+        markerParadaInitialized(marcador : google.maps.Marker){
         var icon = {
-                url: "../assets/images/parada.png", // url
+                url: "../assets/images/colectivo.png", // url
+                scaledSize: new google.maps.Size(20, 20), // scaled size
+                origin: new google.maps.Point(0,0), // origin
+                anchor: new google.maps.Point(0, 0) // anchor
+        };
+        marcador.setIcon(icon);
+        }
+
+        markerColectivoInitialized(marcador : google.maps.Marker){
+        var icon = {
+                url: "../assets/images/colectivo.png", // url
                 scaledSize: new google.maps.Size(20, 20), // scaled size
                 origin: new google.maps.Point(0,0), // origin
                 anchor: new google.maps.Point(0, 0) // anchor
@@ -88,14 +105,6 @@ export class RecorridosComponent {
         }
 /*IMPORTANTEEEEEEEEE INVESTIGARRRRRR ESTO*/
                 this.changeDetectorRef.detectChanges() 
-        }
-
-        markerClicked(event, colectivo:Colectivo) {
-                var marcador = event.target; 
-                marcador.ng2MapComponent.openInfoWindow("iw", marcador,  {
-                        id:colectivo.id, 
-                        patente:colectivo.patente
-                })
         }
         
 }
